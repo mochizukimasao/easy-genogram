@@ -7,9 +7,10 @@ interface SaveModalProps {
   onClose: () => void;
   onSaveSVG: (padding: number, includeBackground: boolean) => void;
   onSavePNG: (padding: number, includeBackground: boolean) => void;
+  onSaveJSON: () => void;
 }
 
-const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSavePNG }) => {
+const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSavePNG, onSaveJSON }) => {
   const { t } = useLanguage();
   const [padding, setPadding] = useState('40');
   const [includeBackground, setIncludeBackground] = useState(true);
@@ -67,6 +68,12 @@ const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSav
         </div>
 
         <div className="space-y-3">
+            <button
+                onClick={onSaveJSON}
+                className="w-full px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            >
+                JSONで保存（推奨）
+            </button>
             <button
                 onClick={handleSaveSVGClick}
                 className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

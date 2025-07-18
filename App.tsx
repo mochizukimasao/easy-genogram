@@ -251,6 +251,25 @@ const AppContent: React.FC = () => {
         image.src = url;
     };
 
+    const handleSaveJSON = () => {
+        const dataToSave = {
+            version: "1.0",
+            created: new Date().toISOString(),
+            data: canvasState
+        };
+        const jsonString = JSON.stringify(dataToSave, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'genogram.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        setSaveModalOpen(false);
+    };
+
     const handleLoad = () => {
         const input = document.createElement('input');
         input.type = 'file';
@@ -321,6 +340,27 @@ const AppContent: React.FC = () => {
             };
         }, selectedElements);
     }, [selectedElements, updateState]);
+
+    const handleToggleLineStyle = useCallback(() => {
+        updateState(prev => {
+            const selectedLineIds = new Set(selectedElements.filter(el => el.type === 'line').map(el => el.id));
+            const selectedBoundaryIds = new Set(selectedElements.filter(el => el.type === 'boundary').map(el => el.id));
+
+            return {
+                ...prev,
+                lines: prev.lines.map(l => 
+                    selectedLineIds.has(l.id) 
+                        ? { ...l, type: l.type === LineType.Solid ? LineType.Dashed : LineType.Solid }
+                        : l
+                ),
+                boundaries: prev.boundaries.map(b => 
+                    selectedBoundaryIds.has(b.id) 
+                        ? { ...b, type: b.type === LineType.Solid ? LineType.Dashed : LineType.Solid }
+                        : b
+                )
+            };
+        }, selectedElements);
+    }, [selectedElements, updateState]);
     
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -368,6 +408,8 @@ const AppContent: React.FC = () => {
                     onLineThicknessChange={setLineThickness}
                     fontSize={fontSize}
                     onFontSizeChange={setFontSize}
+                    onToggleLineStyle={handleToggleLineStyle}
+                    selectedElements={selectedElements}
                 />
                 <main className="flex-1 overflow-auto p-2 sm:p-4 bg-gray-200">
                     <Canvas
@@ -393,6 +435,7 @@ const AppContent: React.FC = () => {
                 onClose={() => setSaveModalOpen(false)}
                 onSaveSVG={handleSaveSVG}
                 onSavePNG={handleSavePNG}
+                onSaveJSON={handleSaveJSON}
             />
         </div>
     );

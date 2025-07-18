@@ -93,21 +93,6 @@ const ShapeComponent: React.FC<{
         </g>
       )}
       
-      {isCohabitingWithIndex && (
-        <text 
-            y={halfH + 16 + (hasName ? 16 : 0)} 
-            textAnchor="middle" 
-            fontSize="12px" 
-            fill="black"
-            stroke="#ffffff"
-            strokeWidth="4px"
-            strokeLinejoin="round"
-            paintOrder="stroke"
-            dominantBaseline="baseline"
-        >
-          ({t('cohabitingCaption')})
-        </text>
-      )}
       {isSelected && <rect x={-halfW - 4} y={-halfH - 4} width={width + 8} height={height + 8 + extraHeight} fill="none" stroke="#4f46e5" strokeWidth="1.5" strokeDasharray="4 4" style={{pointerEvents: 'none'}} />}
     </g>
   );
