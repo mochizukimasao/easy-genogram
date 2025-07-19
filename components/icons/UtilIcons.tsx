@@ -60,8 +60,11 @@ export const EraseIcon: React.FC<IconProps> = ({ className }) => (
     strokeLinejoin="round"
     xmlns="http://www.w3.org/2000/svg"
   >
-    {/* Google Material Design消しゴムアイコン（アウトラインのみ） */}
-    <path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l8.49-8.49c.79-.78 2.05-.78 2.84 0l2.1 2.1z"/>
-    <path d="M14.12 9.22l2.83-2.83"/>
+    {/* Standard eraser icon */}
+    <path d="M19.07 4.93a2.5 2.5 0 0 0-3.54 0L3.56 16.89a2.5 2.5 0 0 0 0 3.54l.94.94a2.5 2.5 0 0 0 3.54 0L20.44 8.47a2.5 2.5 0 0 0 0-3.54z"/>
+    <path d="M18.36 5.64L16.89 7.11"/>
+    <path d="M15.53 8.47L14.06 9.94"/>
+    <path d="M12.7 11.3L11.23 12.77"/>
+    <path d="M9.87 14.13L8.4 15.6"/>
   </svg>
 );
