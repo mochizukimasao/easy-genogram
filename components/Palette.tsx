@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Tool, ShapeType, LineType } from '../types';
 import { MaleIcon, FemaleIcon, IndexMaleIcon, IndexFemaleIcon } from './icons/ShapeIcons';
@@ -21,20 +20,22 @@ interface PaletteProps {
 
 const ToolButton: React.FC<{
     label: string;
+    caption: string;
     tool: Tool;
     activeTool: Tool;
     onSelect: (tool: Tool) => void;
     children: React.ReactNode;
-}> = ({ label, tool, activeTool, onSelect, children }) => (
+}> = ({ label, caption, tool, activeTool, onSelect, children }) => (
   <button
     onClick={() => onSelect(tool)}
-    className={`flex items-center justify-center w-8 h-8 rounded transition-all duration-200 
+    className={`flex flex-col items-center justify-center w-14 h-14 rounded transition-all duration-200 p-1 
         ${activeTool === tool 
           ? 'bg-blue-500 text-white shadow-md' 
           : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'}`}
     title={label}
   >
     {children}
+    <span className="text-xs mt-1">{caption}</span>
   </button>
 );
 
@@ -59,58 +60,58 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
       <div className="flex items-center justify-between gap-4 flex-wrap">
         {/* 基本ツール */}
         <div className="flex items-center gap-1">
-          <ToolButton label={t('select')} tool="select" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('select')} caption={t('captionSelect')} tool="select" activeTool={activeTool} onSelect={onToolSelect}>
             <MousePointerIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('erase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('erase')} caption={t('captionErase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
             <EraseIcon className="w-6 h-6"/>
           </ToolButton>
-          <ToolButton label={t('textTool')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('textTool')} caption={t('captionText')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
             <TextIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
         {/* 図形 */}
         <div className="flex items-center gap-1">
-          <ToolButton label={t('male')} tool={ShapeType.Male} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('male')} caption={t('captionMale')} tool={ShapeType.Male} activeTool={activeTool} onSelect={onToolSelect}>
             <MaleIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('female')} tool={ShapeType.Female} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('female')} caption={t('captionFemale')} tool={ShapeType.Female} activeTool={activeTool} onSelect={onToolSelect}>
             <FemaleIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('indexM')} tool={ShapeType.IndexMale} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('indexM')} caption={t('captionIndexM')} tool={ShapeType.IndexMale} activeTool={activeTool} onSelect={onToolSelect}>
             <IndexMaleIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('indexF')} tool={ShapeType.IndexFemale} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('indexF')} caption={t('captionIndexF')} tool={ShapeType.IndexFemale} activeTool={activeTool} onSelect={onToolSelect}>
             <IndexFemaleIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
         {/* 線・関係 */}
         <div className="flex items-center gap-1">
-          <ToolButton label={t('solidLine')} tool={LineType.Solid} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('solidLine')} caption={t('captionSolid')} tool={LineType.Solid} activeTool={activeTool} onSelect={onToolSelect}>
             <RelationshipLineIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('dotted')} tool={LineType.Dashed} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('dotted')} caption={t('captionDashed')} tool={LineType.Dashed} activeTool={activeTool} onSelect={onToolSelect}>
             <DashedLineIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('separation')} tool="separation" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('separation')} caption={t('captionSep')} tool="separation" activeTool={activeTool} onSelect={onToolSelect}>
             <SeparationIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('divorce')} tool="divorce" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('divorce')} caption={t('captionDiv')} tool="divorce" activeTool={activeTool} onSelect={onToolSelect}>
             <DivorceIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('deceased')} tool="deceased" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('deceased')} caption={t('captionDec')} tool="deceased" activeTool={activeTool} onSelect={onToolSelect}>
             <DeceasedIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
         {/* その他のツール */}
         <div className="flex items-center gap-1">
-          <ToolButton label={t('boundary')} tool="boundary" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('boundary')} caption={t('captionHouse')} tool="boundary" activeTool={activeTool} onSelect={onToolSelect}>
             <CohabitingIcon className="w-5 h-5"/>
           </ToolButton>
-          <ToolButton label={t('cohabitingTool')} tool="cohabiting" activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label={t('cohabitingTool')} caption={t('captionBound')} tool="cohabiting" activeTool={activeTool} onSelect={onToolSelect}>
             <BoundaryIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
