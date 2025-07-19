@@ -3,7 +3,7 @@ import React from 'react';
 import { Tool, ShapeType, LineType } from '../types';
 import { MaleIcon, FemaleIcon, IndexMaleIcon, IndexFemaleIcon } from './icons/ShapeIcons';
 import { RelationshipLineIcon, DashedLineIcon } from './icons/LineIcons';
-import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon } from './icons/UtilIcons';
+import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon, DeleteIcon } from './icons/UtilIcons';
 import { BoundaryIcon } from './icons/BoundaryIcon';
 import { useLanguage } from '../contexts/LanguageContext';
 import { LINE_THICKNESS, FONT_SIZES } from '../constants';
@@ -17,6 +17,8 @@ interface PaletteProps {
   onLineThicknessChange: (width: number) => void;
   fontSize: number;
   onFontSizeChange: (size: number) => void;
+  onDelete: () => void;
+  canDelete: boolean;
 }
 
 const ToolButton: React.FC<{
@@ -52,7 +54,25 @@ const ControlButton: React.FC<{
     </button>
 );
 
-const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange }) => {
+const DeleteButton: React.FC<{
+    onDelete: () => void;
+    canDelete: boolean;
+    label: string;
+}> = ({ onDelete, canDelete, label }) => (
+  <button
+    onClick={onDelete}
+    disabled={!canDelete}
+    className={`flex items-center justify-center w-8 h-8 rounded transition-all duration-200 
+        ${canDelete 
+          ? 'bg-red-500 text-white hover:bg-red-600 shadow-md' 
+          : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
+    title={label}
+  >
+    <DeleteIcon className="w-4 h-4"/>
+  </button>
+);
+
+const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, onDelete, canDelete }) => {
   const { t } = useLanguage();
   return (
     <div className="bg-white border-b border-gray-200 px-4 py-2">
@@ -65,6 +85,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
           <ToolButton label={t('textTool')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
             <TextIcon className="w-4 h-4"/>
           </ToolButton>
+          <DeleteButton onDelete={onDelete} canDelete={canDelete} label={t('delete')}/>
         </div>
 
         {/* 図形 */}

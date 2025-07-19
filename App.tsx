@@ -401,8 +401,6 @@ const AppContent: React.FC = () => {
                 onRedo={handleRedo}
                 canUndo={historyIndex.current > 0}
                 canRedo={historyIndex.current < history.current.length - 1}
-                onDelete={deleteSelectedElements}
-                canDelete={selectedElements.length > 0}
                 isGridVisible={isGridVisible}
                 onGridToggle={setIsGridVisible}
             />
@@ -413,6 +411,8 @@ const AppContent: React.FC = () => {
                 onLineThicknessChange={setLineThickness}
                 fontSize={fontSize}
                 onFontSizeChange={setFontSize}
+                onDelete={deleteSelectedElements}
+                canDelete={selectedElements.length > 0}
             />
             <main className="flex-1 overflow-auto bg-white">
                     <Canvas

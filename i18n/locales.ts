@@ -43,7 +43,7 @@ export const translations = {
     saveAsPNG: 'Save as PNG',
     pngSaveError: 'Failed to save as PNG. Please try again.',
     paddingPx: 'Padding (px)',
-    toggleGrid: 'Toggle Grid',
+    toggleGrid: 'Grid',
     includeBackground: 'Include white background',
   },
   ja: {
@@ -90,7 +90,7 @@ export const translations = {
     saveAsPNG: 'PNGとして保存',
     pngSaveError: 'PNGでの保存に失敗しました。もう一度お試しください。',
     paddingPx: '余白 (px)',
-    toggleGrid: 'グリッドの切り替え',
+    toggleGrid: 'グリッド',
     includeBackground: '背景を白にする',
   },
 };

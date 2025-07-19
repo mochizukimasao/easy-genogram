@@ -13,8 +13,6 @@ interface HeaderProps {
   onRedo: () => void;
   canUndo: boolean;
   canRedo: boolean;
-  onDelete: () => void;
-  canDelete: boolean;
   isGridVisible: boolean;
   onGridToggle: (visible: boolean) => void;
 }
@@ -46,7 +44,7 @@ const IconButton: React.FC<{onClick: () => void, children: React.ReactNode, disa
 )
 
 
-const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo, canRedo, onDelete, canDelete, isGridVisible, onGridToggle }) => {
+const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo, canRedo, isGridVisible, onGridToggle }) => {
   const { language, setLanguage, t } = useLanguage();
 
   return (
