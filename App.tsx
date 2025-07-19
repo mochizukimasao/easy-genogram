@@ -9,7 +9,7 @@ import {
   CanvasState,
   GenogramText,
 } from '../types';
-import { GRID_SIZE, SHAPE_SIZE } from '../constants';
+import { GRID_SIZE, SVG_CANVAS_ID, SHAPE_SIZE, LINE_THICKNESS, FONT_SIZES } from './constants';
 import ShapeComponent from './ShapeComponent';
 import LineComponent from './LineComponent';
 import BoundaryComponent from './BoundaryComponent';
