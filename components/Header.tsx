@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
       <div className="max-w-full mx-auto px-2 sm:px-4 overflow-x-auto">
         <div className="flex justify-between items-center h-10 sm:h-12 flex-nowrap">
           <h1 className="text-base sm:text-lg font-bold text-gray-800 whitespace-nowrap">{t('header')}</h1>
-          <div className="flex items-center gap-1 sm:gap-3 flex-nowrap">
+          <div className="flex items-center gap-2 sm:gap-4 flex-nowrap">
             <Button onClick={onSave}>{t('save')}</Button>
             <Button onClick={onLoad}>{t('load')}</Button>
             <IconButton onClick={onUndo} disabled={!canUndo} title={t('undo')}>
