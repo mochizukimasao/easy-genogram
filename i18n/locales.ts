@@ -62,7 +62,7 @@ export const translations = {
     captionBound: 'Bound.',
   },
   ja: {
-    header: 'かんたんジェノグラム (Easy Genogram)',
+    header: 'かんたんジェノグラム',
     load: '読み込み',
     save: '保存',
     tools: 'ツール',
