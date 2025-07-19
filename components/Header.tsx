@@ -51,15 +51,15 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
     <header className="bg-gray-50 border-b border-gray-200 z-20 w-full">
       <div className="max-w-full mx-auto px-4">
         <div className="flex justify-between items-center h-12">
-          <h1 className="text-lg font-medium text-gray-800">{t('header')}</h1>
+          <h1 className="text-lg font-bold text-gray-800">{t('header')}</h1>
           <div className="flex items-center gap-3">
             <Button onClick={onSave}>{t('save')}</Button>
             <Button onClick={onLoad}>{t('load')}</Button>
             <IconButton onClick={onUndo} disabled={!canUndo} title={t('undo')}>
-                <UndoIcon className="w-4 h-4"/>
+                <UndoIcon className="w-5 h-5"/>
             </IconButton>
             <IconButton onClick={onRedo} disabled={!canRedo} title={t('redo')}>
-                <RedoIcon className="w-4 h-4"/>
+                <RedoIcon className="w-5 h-5"/>
             </IconButton>
             <div className="flex items-center">
                 <input 

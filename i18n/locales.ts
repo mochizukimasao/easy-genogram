@@ -48,7 +48,7 @@ export const translations = {
     includeBackground: 'Include white background',
   },
   ja: {
-    header: 'かんたんジェノグラム',
+    header: 'かんたんジェノグラム (Easy Genogram)',
     load: '読み込み',
     save: '保存',
     tools: 'ツール',
