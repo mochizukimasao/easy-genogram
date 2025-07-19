@@ -445,7 +445,7 @@ const Canvas: React.FC<CanvasProps> = ({
             return;
         }
         
-        if (activeTool === 'boundary' || activeTool === 'cohabiting' || activeTool === 'text') {
+        if (activeTool === 'cohabiting' || activeTool === 'text') {
             setDrawingStartPoint(mousePoint);
             return;
         }
@@ -713,7 +713,7 @@ const Canvas: React.FC<CanvasProps> = ({
                     } else if ((activeTool === 'separation' || activeTool === 'divorce') && clicked.type === 'line') {
                         updateState(prev => ({ ...prev, lines: prev.lines.map(l => l.id === clicked.id ? { ...l, decoration: l.decoration === activeTool ? null : activeTool as LineDecoration } : l) }));
                         handled = true;
-                    } else if (activeTool === 'cohabiting' && clicked.type === 'shape') {
+                    } else if (activeTool === 'boundary' && clicked.type === 'shape') {
                         updateState(prev => ({ ...prev, shapes: prev.shapes.map(s => s.id === clicked.id ? { ...s, isCohabitingWithIndex: !s.isCohabitingWithIndex } : s) }));
                         handled = true;
                     }
@@ -743,16 +743,7 @@ const Canvas: React.FC<CanvasProps> = ({
         }
         
         if (rangeSelectionBox && drawingStartPoint) {
-             if (activeTool === 'boundary') {
-                const newBoundary: GenogramBoundary = {
-                    id: getNextId(), x: snapToGrid(rangeSelectionBox.x), y: snapToGrid(rangeSelectionBox.y),
-                    width: snapToGrid(rangeSelectionBox.width), height: snapToGrid(rangeSelectionBox.height), label: t('cohabitation'),
-                };
-                if(newBoundary.width > GRID_SIZE && newBoundary.height > GRID_SIZE) {
-                    updateState(prev => ({ ...prev, boundaries: [...prev.boundaries, newBoundary] }));
-                    onToolSelect('select');
-                }
-            } else if (activeTool === 'cohabiting') {
+             if (activeTool === 'cohabiting') {
                 const newBoundary: GenogramBoundary = {
                     id: getNextId(), x: snapToGrid(rangeSelectionBox.x), y: snapToGrid(rangeSelectionBox.y),
                     width: snapToGrid(rangeSelectionBox.width), height: snapToGrid(rangeSelectionBox.height), label: '',
@@ -833,10 +824,10 @@ const Canvas: React.FC<CanvasProps> = ({
     const getCursorStyle = () => {
         if (handleDrag) return 'move'; // The cursor style is set on the handle itself
         const tool = activeTool;
-        if (Object.values(LineType).includes(tool as LineType) || tool === 'boundary' || tool === 'cohabiting' || Object.values(ShapeType).includes(tool as ShapeType) || isDrawingLine || tool === 'text') {
+        if (Object.values(LineType).includes(tool as LineType) || tool === 'cohabiting' || Object.values(ShapeType).includes(tool as ShapeType) || isDrawingLine || tool === 'text') {
             return 'crosshair';
         }
-        if (tool === 'deceased' || tool === 'separation' || tool === 'divorce') {
+        if (tool === 'deceased' || tool === 'separation' || tool === 'divorce' || tool === 'boundary') {
             return 'pointer';
         }
         return 'default';
