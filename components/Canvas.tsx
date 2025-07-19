@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   GenogramShape,
@@ -29,8 +28,6 @@ interface CanvasProps {
   moveSelectedElements: (dx: number, dy: number) => void;
   isGridVisible: boolean;
   onToolSelect: (tool: Tool) => void;
-  showInitialShapeAlert: boolean; // New prop
-  setShowInitialShapeAlert: React.Dispatch<React.SetStateAction<boolean>>; // New prop
 }
 
 const Canvas: React.FC<CanvasProps> = ({
@@ -45,8 +42,6 @@ const Canvas: React.FC<CanvasProps> = ({
   moveSelectedElements,
   isGridVisible,
   onToolSelect,
-  showInitialShapeAlert,
-  setShowInitialShapeAlert,
 }) => {
   const { t } = useLanguage();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -154,22 +149,8 @@ const Canvas: React.FC<CanvasProps> = ({
       };
       updateState(prev => ({ ...prev, shapes: [...prev.shapes, newShape] }), [{ type: 'shape', id: newShape.id }]);
       onToolSelect('select');
-
-      // Only show alert if it's the first shape placed and not suppressed
-      if (showInitialShapeAlert) {
-        const name = prompt(t('enterName', { current: newShape.text }));
-        const age = prompt(t('enterAge', { current: newShape.age }));
-        updateState(prev => ({
-          ...prev,
-          shapes: prev.shapes.map(s =>
-            s.id === newShape.id ? { ...s, text: name || s.text, age: age || s.age } : s
-          ),
-        }));
-        // setShowInitialShapeAlert(false); // Suppress subsequent alerts
-      }
-
     }
-  }, [activeTool, getNextId, getSVGPoint, lineThickness, fontSize, snapToGrid, updateState, selectedElements, onToolSelect, showInitialShapeAlert, setShowInitialShapeAlert, t]);
+  }, [activeTool, getNextId, getSVGPoint, lineThickness, fontSize, snapToGrid, updateState, selectedElements, onToolSelect, t]);
 
   const handleMouseMove = useCallback((event: React.MouseEvent<SVGElement>) => {
     if (!isDragging && !isDrawingLine && !isDrawingBoundary && !isDrawingText) return;
@@ -275,7 +256,6 @@ const Canvas: React.FC<CanvasProps> = ({
     if (timesSinceLastTap < 300 && timesSinceLastTap > 0) { // Double tap detected
       event.preventDefault();
       const touch = event.touches[0];
-      const svgPoint = getSVGPoint(touch.clientX, touch.clientY);
       const target = document.elementFromPoint(touch.clientX, touch.clientY) as SVGElement;
       
       // Simulate double click for shapes, text, and boundaries
@@ -328,7 +308,7 @@ const Canvas: React.FC<CanvasProps> = ({
       // Handle single tap / initial touch for drag/draw
       handleMouseDown(event as unknown as React.MouseEvent<SVGElement>);
     }
-  }, [getSVGPoint, handleMouseDown, canvasState.shapes, canvasState.texts, canvasState.boundaries, updateState, t]);
+  }, [canvasState.shapes, canvasState.texts, canvasState.boundaries, updateState, t, handleMouseDown]);
 
   const handleTouchMove = useCallback((event: React.TouchEvent<SVGElement>) => {
     handleMouseMove(event as unknown as React.MouseEvent<SVGElement>);
