@@ -295,50 +295,54 @@ const AppContent: React.FC = () => {
     const handleLoad = () => {
         const input = document.createElement('input');
         input.type = 'file';
-        input.accept = '.svg';
+        input.accept = '.json';
         input.onchange = (e) => {
             const file = (e.target as HTMLInputElement).files?.[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (readEvent) => {
-                    const fileContent = readEvent.target?.result as string;
-                    const dataMatch = fileContent.match(/<!-- genogram-data: (.*?) -->/);
-                    if (dataMatch && dataMatch[1]) {
-                        try {
-                            const decodedData = atob(dataMatch[1]);
-                            const loadedState = JSON.parse(decodedData) as CanvasState;
-    
-                            // Basic validation
-                            if (loadedState && typeof loadedState === 'object') {
-                                const sanitizedState: CanvasState = {
-                                    shapes: loadedState.shapes || [],
-                                    lines: loadedState.lines || [],
-                                    boundaries: loadedState.boundaries || [],
-                                    texts: loadedState.texts || [],
-                                };
-                                
-                                const maxId = Math.max(
-                                    0,
-                                    ...sanitizedState.shapes.map(s => s.id),
-                                    ...sanitizedState.lines.map(l => l.id),
-                                    ...sanitizedState.boundaries.map(b => b.id),
-                                    ...sanitizedState.texts.map(t => t.id),
-                                );
-                                nextId.current = (isFinite(maxId) ? maxId : 0) + 1;
-                                
-                                history.current = [sanitizedState];
-                                historyIndex.current = 0;
-                                setCanvasState(sanitizedState);
-                                setSelectedElements([]);
-                            } else {
-                                throw new Error("Invalid data structure");
-                            }
-                        } catch (error) {
-                            console.error("Failed to parse genogram data:", error);
-                            alert(t('loadError'));
+                    try {
+                        const fileContent = readEvent.target?.result as string;
+                        const jsonData = JSON.parse(fileContent);
+                        
+                        // Check if it's our JSON format or direct canvas state
+                        let loadedState: CanvasState;
+                        if (jsonData.data && jsonData.version) {
+                            // Our JSON format with version and metadata
+                            loadedState = jsonData.data;
+                        } else {
+                            // Direct canvas state format
+                            loadedState = jsonData;
                         }
-                    } else {
-                        alert(t('loadError'));
+
+                        // Basic validation
+                        if (loadedState && typeof loadedState === 'object') {
+                            const sanitizedState: CanvasState = {
+                                shapes: loadedState.shapes || [],
+                                lines: loadedState.lines || [],
+                                boundaries: loadedState.boundaries || [],
+                                texts: loadedState.texts || [],
+                            };
+                            
+                            const maxId = Math.max(
+                                0,
+                                ...sanitizedState.shapes.map(s => s.id),
+                                ...sanitizedState.lines.map(l => l.id),
+                                ...sanitizedState.boundaries.map(b => b.id),
+                                ...sanitizedState.texts.map(t => t.id),
+                            );
+                            nextId.current = (isFinite(maxId) ? maxId : 0) + 1;
+                            
+                            history.current = [sanitizedState];
+                            historyIndex.current = 0;
+                            setCanvasState(sanitizedState);
+                            setSelectedElements([]);
+                        } else {
+                            throw new Error("Invalid data structure");
+                        }
+                    } catch (error) {
+                        console.error("Failed to parse JSON data:", error);
+                        alert('JSONファイルの読み込みに失敗しました。有効なジェノグラムJSONファイルを選択してください。');
                     }
                 };
                 reader.readAsText(file);
