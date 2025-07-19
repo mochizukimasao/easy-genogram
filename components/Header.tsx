@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { UndoIcon } from './icons/UndoIcon';
@@ -47,10 +46,10 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
 
   return (
     <header className="bg-gray-50 border-b border-gray-200 z-20 w-full">
-      <div className="max-w-full mx-auto px-2 sm:px-4 overflow-x-auto">
+      <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
         <div className="flex justify-between items-center h-10 sm:h-12 flex-nowrap">
-          <h1 className="text-base sm:text-lg font-bold text-gray-800 whitespace-nowrap">{t('header')}</h1>
-          <div className="flex items-center gap-2 sm:gap-4 flex-nowrap">
+          <h1 className="text-base sm:text-lg font-bold text-gray-800 whitespace-nowrap mr-4">{t('header')}</h1>
+          <div className="flex items-center gap-1 sm:gap-2 flex-nowrap">
             <Button onClick={onSave}>{t('save')}</Button>
             <Button onClick={onLoad}>{t('load')}</Button>
             <IconButton onClick={onUndo} disabled={!canUndo} title={t('undo')}>
@@ -59,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
             <IconButton onClick={onRedo} disabled={!canRedo} title={t('redo')}>
                 <RedoIcon className="w-4 h-4"/>
             </IconButton>
-            <div className="flex items-center whitespace-nowrap">
+            <div className="flex items-center whitespace-nowrap ml-2">
                 <input 
                     type="checkbox" 
                     id="grid-toggle"
