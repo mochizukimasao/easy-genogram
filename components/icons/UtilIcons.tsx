@@ -55,13 +55,11 @@ export const EraseIcon: React.FC<IconProps> = ({ className }) => (
     className={className}
     fill="none"
     stroke="currentColor"
-    strokeWidth="2.5"
+    strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    {/* より大きな長方形の消しゴム */}
-    <rect x="3" y="8" width="18" height="8" rx="2" fill="currentColor" fillOpacity="0.1" />
-    {/* 太い中央の帯 */}
-    <rect x="3" y="11" width="18" height="2" fill="currentColor" fillOpacity="0.3" />
+    {/* シンプルな四角形のアウトライン */}
+    <rect x="6" y="9" width="12" height="6" rx="1" />
   </svg>
 );
