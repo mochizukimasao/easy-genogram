@@ -445,7 +445,7 @@ const Canvas: React.FC<CanvasProps> = ({
             return;
         }
         
-        if (activeTool === 'boundary' || activeTool === 'text') {
+        if (activeTool === 'boundary' || activeTool === 'cohabiting' || activeTool === 'text') {
             setDrawingStartPoint(mousePoint);
             return;
         }
@@ -752,6 +752,15 @@ const Canvas: React.FC<CanvasProps> = ({
                     updateState(prev => ({ ...prev, boundaries: [...prev.boundaries, newBoundary] }));
                     onToolSelect('select');
                 }
+            } else if (activeTool === 'cohabiting') {
+                const newBoundary: GenogramBoundary = {
+                    id: getNextId(), x: snapToGrid(rangeSelectionBox.x), y: snapToGrid(rangeSelectionBox.y),
+                    width: snapToGrid(rangeSelectionBox.width), height: snapToGrid(rangeSelectionBox.height), label: '',
+                };
+                if(newBoundary.width > GRID_SIZE && newBoundary.height > GRID_SIZE) {
+                    updateState(prev => ({ ...prev, boundaries: [...prev.boundaries, newBoundary] }));
+                    onToolSelect('select');
+                }
             } else if(activeTool === 'text') {
                  const newText: GenogramText = {
                     id: getNextId(), x: snapToGrid(rangeSelectionBox.x), y: snapToGrid(rangeSelectionBox.y),
@@ -824,10 +833,10 @@ const Canvas: React.FC<CanvasProps> = ({
     const getCursorStyle = () => {
         if (handleDrag) return 'move'; // The cursor style is set on the handle itself
         const tool = activeTool;
-        if (Object.values(LineType).includes(tool as LineType) || tool === 'boundary' || Object.values(ShapeType).includes(tool as ShapeType) || isDrawingLine || tool === 'text') {
+        if (Object.values(LineType).includes(tool as LineType) || tool === 'boundary' || tool === 'cohabiting' || Object.values(ShapeType).includes(tool as ShapeType) || isDrawingLine || tool === 'text') {
             return 'crosshair';
         }
-        if (tool === 'deceased' || tool === 'separation' || tool === 'divorce' || tool === 'cohabiting') {
+        if (tool === 'deceased' || tool === 'separation' || tool === 'divorce') {
             return 'pointer';
         }
         return 'default';
