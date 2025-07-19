@@ -393,7 +393,7 @@ const AppContent: React.FC = () => {
     }, [deleteSelectedElements, handleUndo, handleRedo]);
 
     return (
-        <div className="flex flex-col h-screen bg-gray-100 font-sans overflow-hidden">
+        <div className="flex flex-col h-screen bg-white font-sans overflow-hidden">
             <Header 
                 onSave={() => setSaveModalOpen(true)}
                 onLoad={handleLoad}
@@ -406,7 +406,7 @@ const AppContent: React.FC = () => {
                 isGridVisible={isGridVisible}
                 onGridToggle={setIsGridVisible}
             />
-            <div className="flex flex-col sm:flex-row flex-1 min-h-0">
+            <div className="flex flex-1 min-h-0">
                 <Palette
                     activeTool={activeTool}
                     onToolSelect={handleToolSelect}
@@ -415,7 +415,7 @@ const AppContent: React.FC = () => {
                     fontSize={fontSize}
                     onFontSizeChange={setFontSize}
                 />
-                <main className="flex-1 overflow-auto p-2 sm:p-4 bg-gray-200">
+                <main className="flex-1 overflow-auto bg-white">
                     <Canvas
                         canvasState={canvasState}
                         updateState={updateState}
@@ -431,7 +431,7 @@ const AppContent: React.FC = () => {
                     />
                 </main>
             </div>
-            <div className="p-2 bg-gray-100 text-center text-xs text-gray-500 border-t">
+            <div className="p-2 bg-gray-50 text-center text-xs text-gray-500 border-t border-gray-200">
                 <p>{t('tip')}</p>
             </div>
             <SaveModal 
