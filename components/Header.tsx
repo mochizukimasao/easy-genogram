@@ -55,20 +55,14 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
         <div className="flex flex-wrap justify-between items-center py-2 sm:h-16">
           <h1 className="text-xl font-bold text-gray-800 w-full sm:w-auto text-center sm:text-left mb-2 sm:mb-0">{t('header')}</h1>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto mx-auto">
-             <div className="flex items-center space-x-1 border border-gray-300 rounded-md p-0.5">
-                <button 
-                    onClick={() => setLanguage('ja')} 
-                    className={`px-3 py-1 text-xs sm:text-sm rounded-md transition-colors ${language === 'ja' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                >
-                    日本語
-                </button>
-                <button 
-                    onClick={() => setLanguage('en')} 
-                    className={`px-3 py-1 text-xs sm:text-sm rounded-md transition-colors ${language === 'en' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                >
-                    EN
-                </button>
-            </div>
+            <select 
+                value={language} 
+                onChange={(e) => setLanguage(e.target.value as 'ja' | 'en')}
+                className="px-2 py-1 text-xs sm:text-sm border border-gray-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            >
+                <option value="ja">日本語</option>
+                <option value="en">EN</option>
+            </select>
             <div className="flex items-center space-x-2">
                 <IconButton onClick={() => onGridToggle(!isGridVisible)} active={isGridVisible} title={t('toggleGrid')}>
                     <GridIcon className="w-5 h-5"/>

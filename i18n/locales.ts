@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     header: 'Easy Genogram',
-    load: 'Load SVG',
+    load: 'Load',
     save: 'Save',
     tools: 'Tools',
     select: 'Select',
@@ -48,7 +48,7 @@ export const translations = {
   },
   ja: {
     header: 'かんたんジェノグラム',
-    load: 'SVG読み込み',
+    load: '読み込み',
     save: '保存',
     tools: 'ツール',
     select: '選択',
