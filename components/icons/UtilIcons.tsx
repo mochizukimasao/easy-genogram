@@ -55,14 +55,17 @@ export const EraseIcon: React.FC<IconProps> = ({ className }) => (
     className={className}
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="1.5"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <path d="M7 21h10"></path>
-    <path d="M5.5 17H17"></path>
-    <path d="M9 9l8 8"></path>
-    <path d="M9 17L5 13"></path>
-    <path d="M13 9L9 5"></path>
+    {/* 消しゴム本体 */}
+    <rect x="6" y="8" width="12" height="6" rx="1" ry="1" fill="currentColor" fillOpacity="0.1" />
+    {/* 消しゴムの帯 */}
+    <rect x="6" y="10" width="12" height="2" fill="currentColor" fillOpacity="0.2" />
+    {/* 消しカス */}
+    <circle cx="4" cy="16" r="1" fill="currentColor" fillOpacity="0.3" />
+    <circle cx="7" cy="18" r="0.8" fill="currentColor" fillOpacity="0.3" />
+    <circle cx="10" cy="17" r="0.6" fill="currentColor" fillOpacity="0.3" />
   </svg>
 );
