@@ -22,7 +22,7 @@ interface HeaderProps {
 const Button: React.FC<{onClick: () => void, children: React.ReactNode, className?: string, disabled?: boolean, title?: string}> = ({ onClick, children, className = '', disabled=false, title }) => (
     <button
         onClick={onClick}
-        className={`px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300 disabled:cursor-not-allowed ${className}`}
+        className={`px-3 py-1.5 text-sm font-normal text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 ${className}`}
         disabled={disabled}
         title={title}
     >
@@ -35,10 +35,10 @@ const IconButton: React.FC<{onClick: () => void, children: React.ReactNode, disa
         onClick={onClick}
         disabled={disabled}
         title={title}
-        className={`p-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed ${
+        className={`p-1.5 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed ${
             active 
-            ? 'bg-indigo-100 text-indigo-700 border-indigo-300' 
-            : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'
+            ? 'bg-blue-50 text-blue-600 border-blue-300' 
+            : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
         }`}
     >
         {children}
@@ -69,14 +69,14 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
                     id="grid-toggle"
                     checked={isGridVisible}
                     onChange={(e) => onGridToggle(e.target.checked)}
-                    className="mr-2"
+                    className="mr-2 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor="grid-toggle" className="text-sm text-gray-700">{t('toggleGrid')}</label>
             </div>
             <select 
                 value={language} 
                 onChange={(e) => setLanguage(e.target.value as 'ja' | 'en')}
-                className="px-2 py-1 text-sm border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="px-2 py-1.5 text-sm border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
             >
                 <option value="ja">日本語</option>
                 <option value="en">EN</option>
