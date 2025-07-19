@@ -3,7 +3,7 @@ import React from 'react';
 import { Tool, ShapeType, LineType } from '../types';
 import { MaleIcon, FemaleIcon, IndexMaleIcon, IndexFemaleIcon } from './icons/ShapeIcons';
 import { RelationshipLineIcon, DashedLineIcon } from './icons/LineIcons';
-import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon, DeleteIcon } from './icons/UtilIcons';
+import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon, EraseIcon } from './icons/UtilIcons';
 import { BoundaryIcon } from './icons/BoundaryIcon';
 import { useLanguage } from '../contexts/LanguageContext';
 import { LINE_THICKNESS, FONT_SIZES } from '../constants';
@@ -63,7 +63,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
             <MousePointerIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('erase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
-            <DeleteIcon className="w-5 h-5"/>
+            <EraseIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('textTool')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
             <TextIcon className="w-5 h-5"/>

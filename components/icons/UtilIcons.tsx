@@ -49,7 +49,7 @@ export const DivorceIcon: React.FC<IconProps> = ({ className }) => (
   </svg>
 );
 
-export const DeleteIcon: React.FC<IconProps> = ({ className }) => (
+export const EraseIcon: React.FC<IconProps> = ({ className }) => (
   <svg
     viewBox="0 0 24 24"
     className={className}
@@ -59,9 +59,9 @@ export const DeleteIcon: React.FC<IconProps> = ({ className }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <polyline points="3,6 5,6 21,6"></polyline>
-    <path d="M19,6V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V6M8,6V4A2,2 0 0,1 10,2H14A2,2 0 0,1 16,4V6"></path>
-    <line x1="10" y1="11" x2="10" y2="17"></line>
-    <line x1="14" y1="11" x2="14" y2="17"></line>
+    {/* 消しゴム本体 */}
+    <path d="M6 8 L18 4 L20 12 L8 16 Z" fill="none" stroke="currentColor" />
+    {/* 先端の削れた部分 */}
+    <path d="M6 8 L4 10 L6 14 L8 16" fill="none" stroke="currentColor" />
   </svg>
 );
