@@ -406,16 +406,15 @@ const AppContent: React.FC = () => {
                 isGridVisible={isGridVisible}
                 onGridToggle={setIsGridVisible}
             />
-            <div className="flex flex-1 min-h-0">
-                <Palette
-                    activeTool={activeTool}
-                    onToolSelect={handleToolSelect}
-                    lineThickness={lineThickness}
-                    onLineThicknessChange={setLineThickness}
-                    fontSize={fontSize}
-                    onFontSizeChange={setFontSize}
-                />
-                <main className="flex-1 overflow-auto bg-white">
+            <Palette
+                activeTool={activeTool}
+                onToolSelect={handleToolSelect}
+                lineThickness={lineThickness}
+                onLineThicknessChange={setLineThickness}
+                fontSize={fontSize}
+                onFontSizeChange={setFontSize}
+            />
+            <main className="flex-1 overflow-auto bg-white">
                     <Canvas
                         canvasState={canvasState}
                         updateState={updateState}
@@ -430,7 +429,6 @@ const AppContent: React.FC = () => {
                         onToolSelect={handleToolSelect}
                     />
                 </main>
-            </div>
             <div className="p-2 bg-gray-50 text-center text-xs text-gray-500 border-t border-gray-200">
                 <p>{t('tip')}</p>
             </div>
