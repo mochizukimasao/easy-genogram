@@ -60,11 +60,9 @@ export const EraseIcon: React.FC<IconProps> = ({ className }) => (
     strokeLinejoin="round"
     xmlns="http://www.w3.org/2000/svg"
   >
-    {/* Standard eraser icon */}
-    <path d="M19.07 4.93a2.5 2.5 0 0 0-3.54 0L3.56 16.89a2.5 2.5 0 0 0 0 3.54l.94.94a2.5 2.5 0 0 0 3.54 0L20.44 8.47a2.5 2.5 0 0 0 0-3.54z"/>
-    <path d="M18.36 5.64L16.89 7.11"/>
-    <path d="M15.53 8.47L14.06 9.94"/>
-    <path d="M12.7 11.3L11.23 12.77"/>
-    <path d="M9.87 14.13L8.4 15.6"/>
+    {/* Eraser icon resembling the provided image */}
+    <rect x="4" y="8" width="16" height="8" rx="1" ry="1"/>
+    <line x1="10" y1="8" x2="10" y2="16"/>
+    <line x1="14" y1="8" x2="14" y2="16"/>
   </svg>
 );
