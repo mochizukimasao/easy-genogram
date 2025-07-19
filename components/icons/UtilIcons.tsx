@@ -54,12 +54,16 @@ export const EraseIcon: React.FC<IconProps> = ({ className }) => (
     viewBox="0 0 24 24"
     className={className}
     fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
+    stroke="#666"
+    strokeWidth="1.5"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    {/* シンプルな四角形のアウトライン */}
-    <rect x="6" y="9" width="12" height="6" rx="1" />
+    {/* 消しゴム本体 */}
+    <rect x="4" y="8" width="16" height="8" rx="2" fill="#FFB6C1" stroke="#666" />
+    {/* 金属部分 */}
+    <rect x="4" y="13" width="16" height="3" fill="#C0C0C0" stroke="#666" />
+    {/* 削れた部分 */}
+    <path d="M8 8 L10 6 L14 6 L16 8 Z" fill="#FF91A4" stroke="#666" />
   </svg>
 );
