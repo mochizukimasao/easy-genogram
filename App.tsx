@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   GenogramShape,
@@ -16,7 +15,7 @@ import { GRID_SIZE, SVG_CANVAS_ID, SHAPE_SIZE, LINE_THICKNESS, FONT_SIZES } from
 import Header from './components/Header';
 import Palette from './components/Palette';
 import Canvas from './components/Canvas';
-import SaveModal from './components/SaveModal';
+import ExportModal from './components/ExportModal';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
 const MAX_HISTORY_SIZE = 50;
@@ -34,7 +33,7 @@ const AppContent: React.FC = () => {
     const historyIndex = useRef<number>(0);
     const nextId = useRef<number>(1);
 
-    const [isSaveModalOpen, setSaveModalOpen] = useState(false);
+    const [isExportModalOpen, setExportModalOpen] = useState(false);
 
     const updateState = useCallback((updater: (prevState: CanvasState) => CanvasState, selection?: CanvasElement[]) => {
         const currentState = history.current[historyIndex.current];
@@ -94,7 +93,6 @@ const AppContent: React.FC = () => {
     }, [selectedElements, updateState]);
 
     const handleToolSelect = (tool: Tool) => {
-      // 線種ツールで選択された線がある場合は、線種を変更
       if ((tool === LineType.Solid || tool === LineType.Dashed) && selectedElements.length > 0) {
         const hasSelectedLines = selectedElements.some(el => el.type === 'line' || el.type === 'boundary');
         if (hasSelectedLines) {
@@ -112,7 +110,7 @@ const AppContent: React.FC = () => {
               )
             };
           }, selectedElements);
-          return; // 線種変更の場合はここで終了
+          return;
         }
       }
       
@@ -134,10 +132,10 @@ const AppContent: React.FC = () => {
         shapes.forEach(s => {
             let textHeight = 0;
             if (s.text) {
-                textHeight += 18; // Approx height for name + padding
+                textHeight += 18;
             }
             if (s.isCohabitingWithIndex) {
-                textHeight += 16; // Approx height for cohabiting text + padding
+                textHeight += 16;
             }
             minX = Math.min(minX, s.x - s.width / 2 - 5);
             minY = Math.min(minY, s.y - s.height / 2 - 5);
@@ -146,7 +144,7 @@ const AppContent: React.FC = () => {
         });
     
         lines.forEach(l => {
-            const strokeOffset = l.strokeWidth + 10; // Include decoration space
+            const strokeOffset = l.strokeWidth + 10;
             minX = Math.min(minX, l.start.x - strokeOffset, l.end.x - strokeOffset);
             minY = Math.min(minY, l.start.y - strokeOffset, l.end.y - strokeOffset);
             maxX = Math.max(maxX, l.start.x + strokeOffset, l.end.x + strokeOffset);
@@ -157,7 +155,7 @@ const AppContent: React.FC = () => {
             minX = Math.min(minX, b.x - 2);
             minY = Math.min(minY, b.y - 2);
             maxX = Math.max(maxX, b.x + b.width + 2);
-            maxY = Math.max(maxY, b.y + b.height + 2 + 20); // 20 for label
+            maxY = Math.max(maxY, b.y + b.height + 2 + 20);
         });
         
         texts.forEach(t => {
@@ -208,17 +206,14 @@ const AppContent: React.FC = () => {
         return { clonedSvg, bounds };
     };
 
-    const handleSaveSVG = (padding: number, includeBackground: boolean) => {
+    const handleExportSVG = (padding: number, includeBackground: boolean) => {
         const prepared = prepareSvgForExport(padding, includeBackground);
         if (!prepared) return;
         
         const { clonedSvg } = prepared;
 
         const serializer = new XMLSerializer();
-        let svgString = serializer.serializeToString(clonedSvg);
-        
-        const data = `<!-- genogram-data: ${btoa(JSON.stringify(canvasState))} -->`;
-        svgString = svgString.replace('</svg>', `${data}\n</svg>`);
+        const svgString = serializer.serializeToString(clonedSvg);
 
         const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
         const url = URL.createObjectURL(blob);
@@ -229,10 +224,10 @@ const AppContent: React.FC = () => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        setSaveModalOpen(false);
+        setExportModalOpen(false);
     };
 
-    const handleSavePNG = (padding: number, includeBackground: boolean) => {
+    const handleExportPNG = (padding: number, includeBackground: boolean) => {
         const prepared = prepareSvgForExport(padding, includeBackground);
         if (!prepared) return;
 
@@ -246,7 +241,7 @@ const AppContent: React.FC = () => {
         const image = new Image();
         image.onload = () => {
             const canvas = document.createElement('canvas');
-            const scale = 2; // for higher resolution
+            const scale = 2;
             canvas.width = bounds.width * scale;
             canvas.height = bounds.height * scale;
             const ctx = canvas.getContext('2d');
@@ -263,17 +258,17 @@ const AppContent: React.FC = () => {
                 URL.revokeObjectURL(pngUrl);
             }
             URL.revokeObjectURL(url);
-            setSaveModalOpen(false);
+            setExportModalOpen(false);
         };
         image.onerror = () => {
             alert(t('pngSaveError'));
             URL.revokeObjectURL(url);
-            setSaveModalOpen(false);
+            setExportModalOpen(false);
         };
         image.src = url;
     };
 
-    const handleSaveJSON = () => {
+    const handleSaveProject = () => {
         const dataToSave = {
             version: "1.0",
             created: new Date().toISOString(),
@@ -284,15 +279,14 @@ const AppContent: React.FC = () => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'genogram.json';
+        a.download = 'genogram-project.json';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        setSaveModalOpen(false);
     };
 
-    const handleLoad = () => {
+    const handleLoadProject = () => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = '.json';
@@ -305,17 +299,13 @@ const AppContent: React.FC = () => {
                         const fileContent = readEvent.target?.result as string;
                         const jsonData = JSON.parse(fileContent);
                         
-                        // Check if it's our JSON format or direct canvas state
                         let loadedState: CanvasState;
                         if (jsonData.data && jsonData.version) {
-                            // Our JSON format with version and metadata
                             loadedState = jsonData.data;
                         } else {
-                            // Direct canvas state format
                             loadedState = jsonData;
                         }
 
-                        // Basic validation
                         if (loadedState && typeof loadedState === 'object') {
                             const sanitizedState: CanvasState = {
                                 shapes: loadedState.shapes || [],
@@ -342,7 +332,7 @@ const AppContent: React.FC = () => {
                         }
                     } catch (error) {
                         console.error("Failed to parse JSON data:", error);
-                        alert('JSONファイルの読み込みに失敗しました。有効なジェノグラムJSONファイルを選択してください。');
+                        alert(t('loadError'));
                     }
                 };
                 reader.readAsText(file);
@@ -395,8 +385,9 @@ const AppContent: React.FC = () => {
     return (
         <div className="flex flex-col h-screen bg-white font-sans overflow-hidden">
             <Header 
-                onSave={() => setSaveModalOpen(true)}
-                onLoad={handleLoad}
+                onSaveProject={handleSaveProject}
+                onLoadProject={handleLoadProject}
+                onExport={() => setExportModalOpen(true)}
                 onUndo={handleUndo}
                 onRedo={handleRedo}
                 canUndo={historyIndex.current > 0}
@@ -430,12 +421,11 @@ const AppContent: React.FC = () => {
             <div className="p-2 bg-gray-50 text-center text-xs text-gray-500 border-t border-gray-200">
                 <p>{t('tip')}</p>
             </div>
-            <SaveModal 
-                isOpen={isSaveModalOpen}
-                onClose={() => setSaveModalOpen(false)}
-                onSaveSVG={handleSaveSVG}
-                onSavePNG={handleSavePNG}
-                onSaveJSON={handleSaveJSON}
+            <ExportModal 
+                isOpen={isExportModalOpen}
+                onClose={() => setExportModalOpen(false)}
+                onExportSVG={handleExportSVG}
+                onExportPNG={handleExportPNG}
             />
         </div>
     );

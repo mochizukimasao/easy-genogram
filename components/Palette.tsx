@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Tool, ShapeType, LineType } from '../types';
 import { MaleIcon, FemaleIcon, IndexMaleIcon, IndexFemaleIcon } from './icons/ShapeIcons';

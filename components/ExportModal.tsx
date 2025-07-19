@@ -2,27 +2,26 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-interface SaveModalProps {
+interface ExportModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSaveSVG: (padding: number, includeBackground: boolean) => void;
-  onSavePNG: (padding: number, includeBackground: boolean) => void;
-  onSaveJSON: () => void;
+  onExportSVG: (padding: number, includeBackground: boolean) => void;
+  onExportPNG: (padding: number, includeBackground: boolean) => void;
 }
 
-const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSavePNG, onSaveJSON }) => {
+const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose, onExportSVG, onExportPNG }) => {
   const { t } = useLanguage();
   const [padding, setPadding] = useState('40');
   const [includeBackground, setIncludeBackground] = useState(true);
 
   if (!isOpen) return null;
 
-  const handleSaveSVGClick = () => {
-    onSaveSVG(parseInt(padding, 10) || 0, includeBackground);
+  const handleExportSVGClick = () => {
+    onExportSVG(parseInt(padding, 10) || 0, includeBackground);
   };
   
-  const handleSavePNGClick = () => {
-    onSavePNG(parseInt(padding, 10) || 0, includeBackground);
+  const handleExportPNGClick = () => {
+    onExportPNG(parseInt(padding, 10) || 0, includeBackground);
   };
 
   return (
@@ -33,7 +32,7 @@ const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSav
       onClick={onClose}
     >
       <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm mx-4" onClick={(e) => e.stopPropagation()}>
-        <h2 className="text-xl font-bold text-gray-800 mb-4">{t('saveOptions')}</h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">{t('exportOptions')}</h2>
         
         <div className="mb-4">
             <label htmlFor="padding-input" className="block text-sm font-medium text-gray-700 mb-1">
@@ -69,22 +68,16 @@ const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSav
 
         <div className="space-y-3">
             <button
-                onClick={onSaveJSON}
-                className="w-full px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-                JSONで保存（推奨）
-            </button>
-            <button
-                onClick={handleSaveSVGClick}
+                onClick={handleExportSVGClick}
                 className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-                {t('saveAsSVG')}
+                {t('exportAsSVG')}
             </button>
             <button
-                onClick={handleSavePNGClick}
+                onClick={handleExportPNGClick}
                 className="w-full px-4 py-2 text-sm font-medium text-white bg-teal-600 border border-transparent rounded-md shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
             >
-                {t('saveAsPNG')}
+                {t('exportAsPNG')}
             </button>
         </div>
 
@@ -101,4 +94,4 @@ const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onClose, onSaveSVG, onSav
   );
 };
 
-export default SaveModal;
+export default ExportModal;
