@@ -17,7 +17,7 @@ interface HeaderProps {
 const Button: React.FC<{onClick: () => void, children: React.ReactNode, className?: string, disabled?: boolean, title?: string}> = ({ onClick, children, className = '', disabled=false, title }) => (
     <button
         onClick={onClick}
-        className={`px-2 py-1 text-xs font-normal text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 ${className}`}
+        className={`px-2 py-1 text-xs font-normal text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400 whitespace-nowrap ${className}`}
         disabled={disabled}
         title={title}
     >

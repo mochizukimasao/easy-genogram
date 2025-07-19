@@ -126,7 +126,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
           </div>
           
           <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-600">{t('fontSize')}</span>
+            <span className="text-xs text-gray-600 whitespace-nowrap">{t('fontSize')}</span>
             <ControlButton label={t('small')} value={FONT_SIZES.small} currentValue={fontSize} onClick={onFontSizeChange}/>
             <ControlButton label={t('medium')} value={FONT_SIZES.medium} currentValue={fontSize} onClick={onFontSizeChange}/>
             <ControlButton label={t('large')} value={FONT_SIZES.large} currentValue={fontSize} onClick={onFontSizeChange}/>
