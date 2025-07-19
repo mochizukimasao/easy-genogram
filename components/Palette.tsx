@@ -3,7 +3,7 @@ import React from 'react';
 import { Tool, ShapeType, LineType } from '../types';
 import { MaleIcon, FemaleIcon, IndexMaleIcon, IndexFemaleIcon } from './icons/ShapeIcons';
 import { RelationshipLineIcon, DashedLineIcon } from './icons/LineIcons';
-import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon, EraseIcon } from './icons/UtilIcons';
+import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon, DeleteIcon } from './icons/UtilIcons';
 import { BoundaryIcon } from './icons/BoundaryIcon';
 import { useLanguage } from '../contexts/LanguageContext';
 import { LINE_THICKNESS, FONT_SIZES } from '../constants';
@@ -60,58 +60,58 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
         {/* 基本ツール */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('select')} tool="select" activeTool={activeTool} onSelect={onToolSelect}>
-            <MousePointerIcon className="w-4 h-4"/>
+            <MousePointerIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('erase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
-            <EraseIcon className="w-4 h-4"/>
+            <DeleteIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('textTool')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
-            <TextIcon className="w-4 h-4"/>
+            <TextIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
         {/* 図形 */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('male')} tool={ShapeType.Male} activeTool={activeTool} onSelect={onToolSelect}>
-            <MaleIcon className="w-4 h-4"/>
+            <MaleIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('female')} tool={ShapeType.Female} activeTool={activeTool} onSelect={onToolSelect}>
-            <FemaleIcon className="w-4 h-4"/>
+            <FemaleIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('indexM')} tool={ShapeType.IndexMale} activeTool={activeTool} onSelect={onToolSelect}>
-            <IndexMaleIcon className="w-4 h-4"/>
+            <IndexMaleIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('indexF')} tool={ShapeType.IndexFemale} activeTool={activeTool} onSelect={onToolSelect}>
-            <IndexFemaleIcon className="w-4 h-4"/>
+            <IndexFemaleIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
         {/* 線・関係 */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('solidLine')} tool={LineType.Solid} activeTool={activeTool} onSelect={onToolSelect}>
-            <RelationshipLineIcon className="w-4 h-4"/>
+            <RelationshipLineIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('dotted')} tool={LineType.Dashed} activeTool={activeTool} onSelect={onToolSelect}>
-            <DashedLineIcon className="w-4 h-4"/>
+            <DashedLineIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('separation')} tool="separation" activeTool={activeTool} onSelect={onToolSelect}>
-            <SeparationIcon className="w-4 h-4"/>
+            <SeparationIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('divorce')} tool="divorce" activeTool={activeTool} onSelect={onToolSelect}>
-            <DivorceIcon className="w-4 h-4"/>
+            <DivorceIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('deceased')} tool="deceased" activeTool={activeTool} onSelect={onToolSelect}>
-            <DeceasedIcon className="w-4 h-4"/>
+            <DeceasedIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
         {/* その他のツール */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('boundary')} tool="boundary" activeTool={activeTool} onSelect={onToolSelect}>
-            <CohabitingIcon className="w-4 h-4"/>
+            <CohabitingIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('cohabitingTool')} tool="cohabiting" activeTool={activeTool} onSelect={onToolSelect}>
-            <BoundaryIcon className="w-4 h-4"/>
+            <BoundaryIcon className="w-5 h-5"/>
           </ToolButton>
         </div>
 
