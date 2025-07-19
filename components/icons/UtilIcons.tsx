@@ -53,10 +53,15 @@ export const EraseIcon: React.FC<IconProps> = ({ className }) => (
   <svg
     viewBox="0 0 24 24"
     className={className}
-    fill="currentColor"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     xmlns="http://www.w3.org/2000/svg"
   >
-    {/* Google Material Design消しゴムアイコン */}
-    <path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l8.49-8.49c.79-.78 2.05-.78 2.84 0l2.1 2.1zm-2.12 5.66l2.83-2.83L14.12 3.56a.996.996 0 0 0-1.41 0L9.88 6.39l4.24 2.83z"/>
+    {/* Google Material Design消しゴムアイコン（アウトラインのみ） */}
+    <path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l8.49-8.49c.79-.78 2.05-.78 2.84 0l2.1 2.1z"/>
+    <path d="M14.12 9.22l2.83-2.83"/>
   </svg>
 );
