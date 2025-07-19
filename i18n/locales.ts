@@ -63,7 +63,7 @@ export const translations = {
   },
   ja: {
     header: 'かんたんジェノグラム',
-    load: '読み込み',
+    load: '読込',
     save: '保存',
     tools: 'ツール',
     select: '選択',
