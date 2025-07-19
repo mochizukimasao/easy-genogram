@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 type IconProps = {
@@ -16,7 +15,7 @@ export const UndoIcon: React.FC<IconProps> = ({ className }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <path d="M21 7v6h-6"></path>
-    <path d="M3 17a9 9 0 0 0 9 3 9 9 0 0 0 9-9 9 9 0 0 0-9-9 9 9 0 0 0-7.2 3.7"></path>
+    <path d="M9 14 4 9l5-5" />
+    <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11" />
   </svg>
 );

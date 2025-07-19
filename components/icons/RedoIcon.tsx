@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 type IconProps = {
@@ -16,7 +15,7 @@ export const RedoIcon: React.FC<IconProps> = ({ className }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <path d="M3 7v6h6"></path>
-    <path d="M21 17a9 9 0 0 1-9 3 9 9 0 0 1-9-9 9 9 0 0 1 9-9 9 9 0 0 1 7.2 3.7"></path>
+    <path d="m15 14 5-5-5-5" />
+    <path d="M19 9H8.5a5.5 5.5 0 0 0-5.5 5.5v0a5.5 5.5 0 0 0 5.5 5.5H9" />
   </svg>
 );
