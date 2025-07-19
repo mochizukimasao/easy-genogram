@@ -64,8 +64,8 @@ const DeleteButton: React.FC<{
     disabled={!canDelete}
     className={`flex items-center justify-center w-8 h-8 rounded transition-all duration-200 
         ${canDelete 
-          ? 'bg-red-500 text-white hover:bg-red-600 shadow-md' 
-          : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
+          ? 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 shadow-sm' 
+          : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`}
     title={label}
   >
     <DeleteIcon className="w-4 h-4"/>
