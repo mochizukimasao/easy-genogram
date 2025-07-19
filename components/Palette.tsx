@@ -65,7 +65,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
                 <TextIcon className="w-6 h-6"/>
             </ToolButton>
             <ToolButton label={t('boundary')} tool="boundary" activeTool={activeTool} onSelect={onToolSelect}>
-                <BoundaryIcon className="w-6 h-6"/>
+                <CohabitingIcon className="w-6 h-6"/>
             </ToolButton>
             <ToolButton label={t('deceased')} tool="deceased" activeTool={activeTool} onSelect={onToolSelect}>
                 <DeceasedIcon className="w-6 h-6"/>
@@ -77,7 +77,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
                 <DivorceIcon className="w-6 h-6"/>
             </ToolButton>
             <ToolButton label={t('cohabitingTool')} tool="cohabiting" activeTool={activeTool} onSelect={onToolSelect}>
-                <CohabitingIcon className="w-6 h-6"/>
+                <BoundaryIcon className="w-6 h-6"/>
             </ToolButton>
         </div>
       </div>
