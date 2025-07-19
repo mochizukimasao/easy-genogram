@@ -1,12 +1,12 @@
+
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { UndoIcon } from './icons/UndoIcon';
 import { RedoIcon } from './icons/RedoIcon';
 
 interface HeaderProps {
-  onSaveProject: () => void;
-  onLoadProject: () => void;
-  onExport: () => void;
+  onSave: () => void;
+  onLoad: () => void;
   onUndo: () => void;
   onRedo: () => void;
   canUndo: boolean;
@@ -42,7 +42,7 @@ const IconButton: React.FC<{onClick: () => void, children: React.ReactNode, disa
 )
 
 
-const Header: React.FC<HeaderProps> = ({ onSaveProject, onLoadProject, onExport, onUndo, onRedo, canUndo, canRedo, isGridVisible, onGridToggle }) => {
+const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo, canRedo, isGridVisible, onGridToggle }) => {
   const { language, setLanguage, t } = useLanguage();
 
   return (
@@ -51,9 +51,8 @@ const Header: React.FC<HeaderProps> = ({ onSaveProject, onLoadProject, onExport,
         <div className="flex justify-between items-center h-12">
           <h1 className="text-lg font-bold text-gray-800">{t('header')}</h1>
           <div className="flex items-center gap-3">
-            <Button onClick={onSaveProject}>{t('saveProject')}</Button>
-            <Button onClick={onLoadProject}>{t('loadProject')}</Button>
-            <Button onClick={onExport}>{t('export')}</Button>
+            <Button onClick={onSave}>{t('save')}</Button>
+            <Button onClick={onLoad}>{t('load')}</Button>
             <IconButton onClick={onUndo} disabled={!canUndo} title={t('undo')}>
                 <UndoIcon className="w-5 h-5"/>
             </IconButton>

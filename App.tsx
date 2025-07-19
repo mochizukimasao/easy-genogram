@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   GenogramShape,
@@ -15,7 +16,7 @@ import { GRID_SIZE, SVG_CANVAS_ID, SHAPE_SIZE, LINE_THICKNESS, FONT_SIZES } from
 import Header from './components/Header';
 import Palette from './components/Palette';
 import Canvas from './components/Canvas';
-import ExportModal from './components/ExportModal';
+import SaveModal from './components/SaveModal';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
 const MAX_HISTORY_SIZE = 50;
@@ -33,7 +34,7 @@ const AppContent: React.FC = () => {
     const historyIndex = useRef<number>(0);
     const nextId = useRef<number>(1);
 
-    const [isExportModalOpen, setExportModalOpen] = useState(false);
+    const [isSaveModalOpen, setSaveModalOpen] = useState(false);
 
     const updateState = useCallback((updater: (prevState: CanvasState) => CanvasState, selection?: CanvasElement[]) => {
         const currentState = history.current[historyIndex.current];
@@ -224,7 +225,6 @@ const AppContent: React.FC = () => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        setExportModalOpen(false);
     };
 
     const handleExportPNG = (padding: number, includeBackground: boolean) => {
@@ -258,12 +258,10 @@ const AppContent: React.FC = () => {
                 URL.revokeObjectURL(pngUrl);
             }
             URL.revokeObjectURL(url);
-            setExportModalOpen(false);
         };
         image.onerror = () => {
             alert(t('pngSaveError'));
             URL.revokeObjectURL(url);
-            setExportModalOpen(false);
         };
         image.src = url;
     };
@@ -385,9 +383,8 @@ const AppContent: React.FC = () => {
     return (
         <div className="flex flex-col h-screen bg-white font-sans overflow-hidden">
             <Header 
-                onSaveProject={handleSaveProject}
-                onLoadProject={handleLoadProject}
-                onExport={() => setExportModalOpen(true)}
+                onSave={() => setSaveModalOpen(true)}
+                onLoad={handleLoadProject}
                 onUndo={handleUndo}
                 onRedo={handleRedo}
                 canUndo={historyIndex.current > 0}
@@ -421,11 +418,12 @@ const AppContent: React.FC = () => {
             <div className="p-2 bg-gray-50 text-center text-xs text-gray-500 border-t border-gray-200">
                 <p>{t('tip')}</p>
             </div>
-            <ExportModal 
-                isOpen={isExportModalOpen}
-                onClose={() => setExportModalOpen(false)}
-                onExportSVG={handleExportSVG}
-                onExportPNG={handleExportPNG}
+            <SaveModal 
+                isOpen={isSaveModalOpen}
+                onClose={() => setSaveModalOpen(false)}
+                onSaveSVG={handleExportSVG}
+                onSavePNG={handleExportPNG}
+                onSaveJSON={handleSaveProject}
             />
         </div>
     );
