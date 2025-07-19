@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { UndoIcon } from './icons/UndoIcon';
@@ -46,10 +47,10 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
 
   return (
     <header className="bg-gray-50 border-b border-gray-200 z-20 w-full">
-      <div className="max-w-full mx-auto px-2 sm:px-4">
-        <div className="flex justify-between items-center h-10 sm:h-12">
-          <h1 className="text-base sm:text-lg font-bold text-gray-800">{t('header')}</h1>
-          <div className="flex items-center gap-1 sm:gap-3">
+      <div className="max-w-full mx-auto px-2 sm:px-4 overflow-x-auto">
+        <div className="flex justify-between items-center h-10 sm:h-12 flex-nowrap">
+          <h1 className="text-base sm:text-lg font-bold text-gray-800 whitespace-nowrap">{t('header')}</h1>
+          <div className="flex items-center gap-1 sm:gap-3 flex-nowrap">
             <Button onClick={onSave}>{t('save')}</Button>
             <Button onClick={onLoad}>{t('load')}</Button>
             <IconButton onClick={onUndo} disabled={!canUndo} title={t('undo')}>
@@ -58,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
             <IconButton onClick={onRedo} disabled={!canRedo} title={t('redo')}>
                 <RedoIcon className="w-4 h-4"/>
             </IconButton>
-            <div className="flex items-center">
+            <div className="flex items-center whitespace-nowrap">
                 <input 
                     type="checkbox" 
                     id="grid-toggle"
@@ -66,12 +67,12 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
                     onChange={(e) => onGridToggle(e.target.checked)}
                     className="mr-1 sm:mr-2 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <label htmlFor="grid-toggle" className="text-xs sm:text-sm text-gray-700">{t('toggleGrid')}</label>
+                <label htmlFor="grid-toggle" className="text-xs sm:text-sm text-gray-700 whitespace-nowrap">{t('toggleGrid')}</label>
             </div>
             <select 
                 value={language} 
                 onChange={(e) => setLanguage(e.target.value as 'ja' | 'en')}
-                className="px-1.5 py-1 text-xs sm:px-2 sm:py-1.5 border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="px-1.5 py-1 text-xs sm:px-2 sm:py-1.5 border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 whitespace-nowrap"
             >
                 <option value="ja">日本語</option>
                 <option value="en">EN</option>
