@@ -63,7 +63,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
             <MousePointerIcon className="w-5 h-5"/>
           </ToolButton>
           <ToolButton label={t('erase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
-            <EraseIcon className="w-5 h-5"/>
+            <EraseIcon className="w-6 h-6"/>
           </ToolButton>
           <ToolButton label={t('textTool')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
             <TextIcon className="w-5 h-5"/>
