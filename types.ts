@@ -14,6 +14,7 @@ export type LineDecoration = 'separation' | 'divorce';
 
 export type Tool = 
   | 'select' 
+  | 'erase'
   | 'deceased' 
   | 'boundary' 
   | 'separation'

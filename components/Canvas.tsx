@@ -414,6 +414,27 @@ const Canvas: React.FC<CanvasProps> = ({
         const mousePoint = getSVGPoint(e);
         if (!mousePoint) return;
 
+        // 消しゴムツールの場合は、クリックした要素を削除
+        if (activeTool === 'erase') {
+            const result = getElementAtPosition(mousePoint.x, mousePoint.y, canvasState, selectedElements);
+            if (result) {
+                const elementToDelete = result.element;
+                updateState(prev => {
+                    if (elementToDelete.type === 'shape') {
+                        return { ...prev, shapes: prev.shapes.filter(s => s.id !== elementToDelete.id) };
+                    } else if (elementToDelete.type === 'line') {
+                        return { ...prev, lines: prev.lines.filter(l => l.id !== elementToDelete.id) };
+                    } else if (elementToDelete.type === 'boundary') {
+                        return { ...prev, boundaries: prev.boundaries.filter(b => b.id !== elementToDelete.id) };
+                    } else if (elementToDelete.type === 'text') {
+                        return { ...prev, texts: prev.texts.filter(t => t.id !== elementToDelete.id) };
+                    }
+                    return prev;
+                }, []);
+            }
+            return;
+        }
+
         const result = getElementAtPosition(mousePoint.x, mousePoint.y, canvasState, selectedElements);
 
         if (isTouchEvent && result && e.cancelable) {
@@ -826,6 +847,9 @@ const Canvas: React.FC<CanvasProps> = ({
     const getCursorStyle = () => {
         if (handleDrag) return 'move'; // The cursor style is set on the handle itself
         const tool = activeTool;
+        if (tool === 'erase') {
+            return 'pointer';
+        }
         if (Object.values(LineType).includes(tool as LineType) || tool === 'cohabiting' || Object.values(ShapeType).includes(tool as ShapeType) || isDrawingLine || tool === 'text') {
             return 'crosshair';
         }

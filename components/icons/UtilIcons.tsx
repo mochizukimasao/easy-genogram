@@ -49,7 +49,7 @@ export const DivorceIcon: React.FC<IconProps> = ({ className }) => (
   </svg>
 );
 
-export const DeleteIcon: React.FC<IconProps> = ({ className }) => (
+export const EraseIcon: React.FC<IconProps> = ({ className }) => (
   <svg
     viewBox="0 0 24 24"
     className={className}
@@ -59,9 +59,10 @@ export const DeleteIcon: React.FC<IconProps> = ({ className }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <polyline points="3,6 5,6 21,6"></polyline>
-    <path d="M19,6V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V6M8,6V4A2,2 0 0,1 10,2H14A2,2 0 0,1 16,4V6"></path>
-    <line x1="10" y1="11" x2="10" y2="17"></line>
-    <line x1="14" y1="11" x2="14" y2="17"></line>
+    <path d="M7 21h10"></path>
+    <path d="M5.5 17H17"></path>
+    <path d="M9 9l8 8"></path>
+    <path d="M9 17L5 13"></path>
+    <path d="M13 9L9 5"></path>
   </svg>
 );
