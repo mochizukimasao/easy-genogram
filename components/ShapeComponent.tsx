@@ -93,7 +93,7 @@ const ShapeComponent: React.FC<{
         </g>
       )}
       
-      {shape.type === 'boundary' && (
+      {shape.isCohabitingWithIndex && (
         <text 
             y={halfH + 16 + (hasName ? 16 : 0)} 
             textAnchor="middle" 
