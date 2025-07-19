@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Tool, ShapeType, LineType } from '../types';
 import { MaleIcon, FemaleIcon, IndexMaleIcon, IndexFemaleIcon } from './icons/ShapeIcons';
@@ -28,14 +29,14 @@ const ToolButton: React.FC<{
 }> = ({ label, caption, tool, activeTool, onSelect, children }) => (
   <button
     onClick={() => onSelect(tool)}
-    className={`flex flex-col items-center justify-center w-12 h-12 rounded transition-all duration-200 p-1 
+    className={`flex flex-col items-center justify-center w-10 h-14 rounded transition-all duration-200 p-1 
         ${activeTool === tool 
           ? 'bg-blue-500 text-white shadow-md' 
           : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'}`}
     title={label}
   >
     {children}
-    <span className="text-xs mt-1" style={{ fontSize: '0.6rem' }}>{caption}</span>
+    <span className="text-[0.6rem] mt-1 leading-none">{caption}</span>
   </button>
 );
 
@@ -56,8 +57,8 @@ const ControlButton: React.FC<{
 const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange }) => {
   const { t } = useLanguage();
   return (
-    <div className="bg-white border-b border-gray-200 px-4 py-2">
-      <div className="flex items-center justify-between gap-4 flex-wrap">
+    <div className="bg-white border-b border-gray-200 px-2 py-1 sm:px-4 sm:py-2">
+      <div className="flex items-center justify-between gap-1 sm:gap-4 flex-wrap">
         {/* 基本ツール */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('select')} caption={t('captionSelect')} tool="select" activeTool={activeTool} onSelect={onToolSelect}>
