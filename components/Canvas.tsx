@@ -114,11 +114,12 @@ const TextComponent: React.FC<{
         <foreignObject x={x} y={y} width={width} height={height} style={{ overflow: 'visible', pointerEvents: isEditing ? 'auto': 'none' }}>
             <div
                 style={{
-                    backgroundColor: '#f9f9f9',
+                    backgroundColor: 'transparent',
                     width: '100%',
                     height: '100%',
                     padding: '4px',
-                    fontSize: `${fontSize}px`,
+                    fontSize: `${fontSize + 4}px`,
+                    fontWeight: 'bold',
                     lineHeight: 1.2,
                     fontFamily: 'sans-serif',
                     wordWrap: 'break-word',
@@ -142,7 +143,8 @@ const TextComponent: React.FC<{
                         outline: 'none',
                         resize: 'none',
                         padding: '4px',
-                        fontSize: `${fontSize}px`,
+                        fontSize: `${fontSize + 4}px`,
+                        fontWeight: 'bold',
                         lineHeight: 1.2,
                         fontFamily: 'sans-serif',
                         color: 'black',

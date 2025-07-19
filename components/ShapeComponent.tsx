@@ -58,7 +58,7 @@ const ShapeComponent: React.FC<{
         <text
           y={2}
           textAnchor="middle"
-          fontSize="18px"
+          fontSize="22px"
           fontWeight="bold"
           fill="#333"
           dominantBaseline="middle"
@@ -73,7 +73,8 @@ const ShapeComponent: React.FC<{
         <text
             y={halfH + 16}
             textAnchor="middle"
-            fontSize="14px"
+            fontSize="18px"
+            fontWeight="bold"
             fill="#333"
             dominantBaseline="baseline"
             style={{pointerEvents: 'none'}}
@@ -97,7 +98,8 @@ const ShapeComponent: React.FC<{
         <text 
             y={halfH + 16 + (hasName ? 16 : 0)} 
             textAnchor="middle" 
-            fontSize="12px" 
+            fontSize="16px" 
+            fontWeight="bold"
             fill="black"
             stroke="#ffffff"
             strokeWidth="4px"
