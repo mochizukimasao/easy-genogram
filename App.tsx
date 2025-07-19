@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   GenogramShape,
@@ -29,6 +28,7 @@ const AppContent: React.FC = () => {
     const [lineThickness, setLineThickness] = useState<number>(LINE_THICKNESS.medium);
     const [fontSize, setFontSize] = useState<number>(FONT_SIZES.medium);
     const [isGridVisible, setIsGridVisible] = useState(true);
+    const [showInitialShapeAlert, setShowInitialShapeAlert] = useState(true); // 新しいstate
 
     const history = useRef<CanvasState[]>([canvasState]);
     const historyIndex = useRef<number>(0);
@@ -413,6 +413,8 @@ const AppContent: React.FC = () => {
                         moveSelectedElements={moveSelectedElements}
                         isGridVisible={isGridVisible}
                         onToolSelect={handleToolSelect}
+                        showInitialShapeAlert={showInitialShapeAlert} // Pass the new state
+                        setShowInitialShapeAlert={setShowInitialShapeAlert} // Pass the setter
                     />
                 </main>
             <div className="p-2 bg-gray-50 text-center text-xs text-gray-500 border-t border-gray-200">
