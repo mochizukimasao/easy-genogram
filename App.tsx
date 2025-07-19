@@ -94,6 +94,28 @@ const AppContent: React.FC = () => {
     }, [selectedElements, updateState]);
 
     const handleToolSelect = (tool: Tool) => {
+      // 線種ツールで選択された線がある場合は、線種を変更
+      if ((tool === LineType.Solid || tool === LineType.Dashed) && selectedElements.length > 0) {
+        const hasSelectedLines = selectedElements.some(el => el.type === 'line' || el.type === 'boundary');
+        if (hasSelectedLines) {
+          updateState(prev => {
+            const selectedLineIds = new Set(selectedElements.filter(el => el.type === 'line').map(el => el.id));
+            const selectedBoundaryIds = new Set(selectedElements.filter(el => el.type === 'boundary').map(el => el.id));
+
+            return {
+              ...prev,
+              lines: prev.lines.map(l => 
+                selectedLineIds.has(l.id) ? { ...l, type: tool as LineType } : l
+              ),
+              boundaries: prev.boundaries.map(b => 
+                selectedBoundaryIds.has(b.id) ? { ...b, type: tool as LineType } : b
+              )
+            };
+          }, selectedElements);
+          return; // 線種変更の場合はここで終了
+        }
+      }
+      
       setActiveTool(tool);
       if (tool !== 'select') {
           setSelectedElements([]);
@@ -341,26 +363,6 @@ const AppContent: React.FC = () => {
         }, selectedElements);
     }, [selectedElements, updateState]);
 
-    const handleToggleLineStyle = useCallback(() => {
-        updateState(prev => {
-            const selectedLineIds = new Set(selectedElements.filter(el => el.type === 'line').map(el => el.id));
-            const selectedBoundaryIds = new Set(selectedElements.filter(el => el.type === 'boundary').map(el => el.id));
-
-            return {
-                ...prev,
-                lines: prev.lines.map(l => 
-                    selectedLineIds.has(l.id) 
-                        ? { ...l, type: l.type === LineType.Solid ? LineType.Dashed : LineType.Solid }
-                        : l
-                ),
-                boundaries: prev.boundaries.map(b => 
-                    selectedBoundaryIds.has(b.id) 
-                        ? { ...b, type: b.type === LineType.Solid ? LineType.Dashed : LineType.Solid }
-                        : b
-                )
-            };
-        }, selectedElements);
-    }, [selectedElements, updateState]);
     
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -408,8 +410,6 @@ const AppContent: React.FC = () => {
                     onLineThicknessChange={setLineThickness}
                     fontSize={fontSize}
                     onFontSizeChange={setFontSize}
-                    onToggleLineStyle={handleToggleLineStyle}
-                    selectedElements={selectedElements}
                 />
                 <main className="flex-1 overflow-auto p-2 sm:p-4 bg-gray-200">
                     <Canvas

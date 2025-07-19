@@ -17,8 +17,6 @@ interface PaletteProps {
   onLineThicknessChange: (width: number) => void;
   fontSize: number;
   onFontSizeChange: (size: number) => void;
-  onToggleLineStyle?: () => void;
-  selectedElements?: any[];
 }
 
 const ToolButton: React.FC<{
@@ -53,7 +51,7 @@ const ControlButton: React.FC<{
     </button>
 );
 
-const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, onToggleLineStyle, selectedElements = [] }) => {
+const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange }) => {
   const { t } = useLanguage();
   return (
     <aside className="w-full sm:w-48 p-2 sm:p-4 flex flex-row sm:flex-col items-center sm:items-stretch gap-4 sm:gap-6 overflow-x-auto sm:overflow-y-auto sm:overflow-x-hidden whitespace-nowrap sm:whitespace-normal bg-gray-100 flex-shrink-0">
@@ -127,17 +125,6 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
             <ControlButton label={t('large')} value={FONT_SIZES.large} currentValue={fontSize} onClick={onFontSizeChange}/>
         </div>
       </div>
-      {onToggleLineStyle && selectedElements.some(el => el.type === 'line' || el.type === 'boundary') && (
-        <div className="flex-shrink-0 w-32 sm:w-auto">
-          <h3 className="hidden sm:block text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">線スタイル</h3>
-          <button
-            onClick={onToggleLineStyle}
-            className="w-full px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            実線⇔点線
-          </button>
-        </div>
-      )}
     </aside>
   );
 };
