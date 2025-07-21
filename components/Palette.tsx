@@ -39,18 +39,26 @@ const ToolButton: React.FC<{
   </button>
 );
 
-const ControlButton: React.FC<{
+const SelectControl: React.FC<{
     label: string;
     value: number;
-    currentValue: number;
-    onClick: (value: number) => void;
-}> = ({ label, value, currentValue, onClick }) => (
-    <button
-        onClick={() => onClick(value)}
-        className={`px-2 py-1 text-xs rounded transition-colors ${currentValue === value ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-    >
-        {label}
-    </button>
+    options: Array<{label: string; value: number}>;
+    onChange: (value: number) => void;
+}> = ({ label, value, options, onChange }) => (
+    <div className="flex items-center gap-1">
+        <span className="text-xs text-gray-600">{label}</span>
+        <select 
+            value={value}
+            onChange={(e) => onChange(Number(e.target.value))}
+            className="px-2 py-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-12"
+        >
+            {options.map(option => (
+                <option key={option.value} value={option.value}>
+                    {option.label}
+                </option>
+            ))}
+        </select>
+    </div>
 );
 
 const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange }) => {
@@ -121,19 +129,27 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
         
         {/* 設定 */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-600">線</span>
-            <ControlButton label="細" value={LINE_THICKNESS.thin} currentValue={lineThickness} onClick={onLineThicknessChange}/>
-            <ControlButton label="中" value={LINE_THICKNESS.medium} currentValue={lineThickness} onClick={onLineThicknessChange}/>
-            <ControlButton label="太" value={LINE_THICKNESS.large} currentValue={lineThickness} onClick={onLineThicknessChange}/>
-          </div>
+          <SelectControl
+            label="線"
+            value={lineThickness}
+            onChange={onLineThicknessChange}
+            options={[
+              { label: "細", value: LINE_THICKNESS.thin },
+              { label: "中", value: LINE_THICKNESS.medium },
+              { label: "太", value: LINE_THICKNESS.large }
+            ]}
+          />
           
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-600">字</span>
-            <ControlButton label="小" value={FONT_SIZES.small} currentValue={fontSize} onClick={onFontSizeChange}/>
-            <ControlButton label="中" value={FONT_SIZES.medium} currentValue={fontSize} onClick={onFontSizeChange}/>
-            <ControlButton label="大" value={FONT_SIZES.large} currentValue={fontSize} onClick={onFontSizeChange}/>
-          </div>
+          <SelectControl
+            label="字"
+            value={fontSize}
+            onChange={onFontSizeChange}
+            options={[
+              { label: "小", value: FONT_SIZES.small },
+              { label: "中", value: FONT_SIZES.medium },
+              { label: "大", value: FONT_SIZES.large }
+            ]}
+          />
         </div>
       </div>
     </div>
