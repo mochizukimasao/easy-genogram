@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+Disallow: /easy-genogram/
+
+# 検索エンジンのクロール頻度制御
+Crawl-delay: 1
+
+# サイトマップの場所
+Sitemap: https://easy-genogram.vercel.app/sitemap.xml
+
+# 主要な検索エンジン向けの最適化
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
