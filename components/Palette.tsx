@@ -116,20 +116,23 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
           </ToolButton>
         </div>
 
+        {/* セパレーター */}
+        <div className="w-px h-6 bg-gray-300"></div>
+        
         {/* 設定 */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-600">{t('lineThickness')}</span>
-            <ControlButton label={t('small')} value={LINE_THICKNESS.thin} currentValue={lineThickness} onClick={onLineThicknessChange}/>
-            <ControlButton label={t('medium')} value={LINE_THICKNESS.medium} currentValue={lineThickness} onClick={onLineThicknessChange}/>
-            <ControlButton label={t('large')} value={LINE_THICKNESS.large} currentValue={lineThickness} onClick={onLineThicknessChange}/>
+            <span className="text-xs text-gray-600">線</span>
+            <ControlButton label="細" value={LINE_THICKNESS.thin} currentValue={lineThickness} onClick={onLineThicknessChange}/>
+            <ControlButton label="中" value={LINE_THICKNESS.medium} currentValue={lineThickness} onClick={onLineThicknessChange}/>
+            <ControlButton label="太" value={LINE_THICKNESS.large} currentValue={lineThickness} onClick={onLineThicknessChange}/>
           </div>
           
           <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-600 whitespace-nowrap">{t('fontSize')}</span>
-            <ControlButton label={t('small')} value={FONT_SIZES.small} currentValue={fontSize} onClick={onFontSizeChange}/>
-            <ControlButton label={t('medium')} value={FONT_SIZES.medium} currentValue={fontSize} onClick={onFontSizeChange}/>
-            <ControlButton label={t('large')} value={FONT_SIZES.large} currentValue={fontSize} onClick={onFontSizeChange}/>
+            <span className="text-xs text-gray-600">字</span>
+            <ControlButton label="小" value={FONT_SIZES.small} currentValue={fontSize} onClick={onFontSizeChange}/>
+            <ControlButton label="中" value={FONT_SIZES.medium} currentValue={fontSize} onClick={onFontSizeChange}/>
+            <ControlButton label="大" value={FONT_SIZES.large} currentValue={fontSize} onClick={onFontSizeChange}/>
           </div>
         </div>
       </div>
