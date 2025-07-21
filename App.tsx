@@ -17,6 +17,7 @@ import Header from './components/Header';
 import Palette from './components/Palette';
 import Canvas from './components/Canvas';
 import SaveModal from './components/SaveModal';
+import ToolHint from './components/ToolHint';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
 const MAX_HISTORY_SIZE = 50;
@@ -453,10 +454,10 @@ const AppContent: React.FC = () => {
                         onToolSelect={handleToolSelect}
                     />
                 </main>
+            <ToolHint activeTool={activeTool} />
             <footer className="bg-white border-t border-gray-200 p-4">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center text-xs text-gray-500 space-y-2">
-                        <p>{t('tip')}</p>
+                    <div className="text-center text-xs text-gray-500">
                         <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
                             <span>&copy; 2025 mochizuki masao</span>
                             <div className="flex space-x-4">
