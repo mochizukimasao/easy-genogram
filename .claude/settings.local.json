@@ -9,7 +9,10 @@
       "Bash(npm run dev:*)",
       "Bash(rm:*)",
       "WebFetch(domain:easy-genogram.vercel.app)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(git branch:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
