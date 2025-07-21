@@ -28,14 +28,14 @@ const ToolButton: React.FC<{
 }> = ({ label, caption, tool, activeTool, onSelect, children }) => (
   <button
     onClick={() => onSelect(tool)}
-    className={`flex flex-col items-center justify-center min-w-12 h-10 rounded transition-all duration-200 p-1 
+    className={`flex flex-col items-center justify-center min-w-[3rem] h-10 px-3 rounded-lg gap-0.5 transition-all duration-200
         ${activeTool === tool 
           ? 'bg-blue-500 text-white shadow-md' 
           : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'}`}
     title={label}
   >
     {children}
-    <span className="text-[0.6rem] mt-1 leading-none">{caption}</span>
+    <span className="text-xs font-medium truncate">{caption}</span>
   </button>
 );
 
@@ -64,7 +64,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
             <MousePointerIcon className="w-4 h-4"/>
           </ToolButton>
           <ToolButton label={t('erase')} caption={t('captionErase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
-            <EraseIcon className="w-5 h-5"/>
+            <EraseIcon className="w-4 h-4"/>
           </ToolButton>
           <ToolButton label={t('textTool')} caption={t('captionText')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
             <TextIcon className="w-4 h-4"/>
