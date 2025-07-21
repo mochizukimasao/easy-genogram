@@ -355,6 +355,42 @@ const AppContent: React.FC = () => {
         }, selectedElements);
     }, [selectedElements, updateState]);
 
+    const updateSelectedLineThickness = useCallback((newThickness: number) => {
+        if (selectedElements.length === 0) return;
+        updateState(prev => {
+            const selectedLineIds = new Set(selectedElements.filter(el => el.type === 'line').map(el => el.id));
+            const selectedBoundaryIds = new Set(selectedElements.filter(el => el.type === 'boundary').map(el => el.id));
+
+            return {
+                ...prev,
+                lines: prev.lines.map(l => 
+                    selectedLineIds.has(l.id) ? { ...l, strokeWidth: newThickness } : l
+                ),
+                boundaries: prev.boundaries.map(b => 
+                    selectedBoundaryIds.has(b.id) ? { ...b, strokeWidth: newThickness } : b
+                )
+            };
+        }, selectedElements);
+    }, [selectedElements, updateState]);
+
+    const updateSelectedFontSize = useCallback((newFontSize: number) => {
+        if (selectedElements.length === 0) return;
+        updateState(prev => {
+            const selectedShapeIds = new Set(selectedElements.filter(el => el.type === 'shape').map(el => el.id));
+            const selectedTextIds = new Set(selectedElements.filter(el => el.type === 'text').map(el => el.id));
+
+            return {
+                ...prev,
+                shapes: prev.shapes.map(s => 
+                    selectedShapeIds.has(s.id) ? { ...s, fontSize: newFontSize } : s
+                ),
+                texts: prev.texts.map(t => 
+                    selectedTextIds.has(t.id) ? { ...t, fontSize: newFontSize } : t
+                )
+            };
+        }, selectedElements);
+    }, [selectedElements, updateState]);
+
     
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -399,6 +435,8 @@ const AppContent: React.FC = () => {
                 onLineThicknessChange={setLineThickness}
                 fontSize={fontSize}
                 onFontSizeChange={setFontSize}
+                onSelectedLineThicknessChange={updateSelectedLineThickness}
+                onSelectedFontSizeChange={updateSelectedFontSize}
             />
             <main className="flex-1 overflow-auto bg-white">
                     <Canvas

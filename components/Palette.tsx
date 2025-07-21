@@ -16,6 +16,8 @@ interface PaletteProps {
   onLineThicknessChange: (width: number) => void;
   fontSize: number;
   onFontSizeChange: (size: number) => void;
+  onSelectedLineThicknessChange?: (width: number) => void;
+  onSelectedFontSizeChange?: (size: number) => void;
 }
 
 const ToolButton: React.FC<{
@@ -44,12 +46,19 @@ const SelectControl: React.FC<{
     value: number;
     options: Array<{label: string; value: number}>;
     onChange: (value: number) => void;
-}> = ({ label, value, options, onChange }) => (
+    onSelectionChange?: (value: number) => void;
+}> = ({ label, value, options, onChange, onSelectionChange }) => (
     <div className="flex items-center gap-1">
         <span className="text-xs text-gray-600">{label}</span>
         <select 
             value={value}
-            onChange={(e) => onChange(Number(e.target.value))}
+            onChange={(e) => {
+                const newValue = Number(e.target.value);
+                onChange(newValue);
+                if (onSelectionChange) {
+                    onSelectionChange(newValue);
+                }
+            }}
             className="px-2 py-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-12"
         >
             {options.map(option => (
@@ -61,7 +70,7 @@ const SelectControl: React.FC<{
     </div>
 );
 
-const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange }) => {
+const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, onSelectedLineThicknessChange, onSelectedFontSizeChange }) => {
   const { t } = useLanguage();
   return (
     <div className="bg-white border-b border-gray-200 px-3 py-2 overflow-x-auto">
@@ -133,6 +142,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
             label="線"
             value={lineThickness}
             onChange={onLineThicknessChange}
+            onSelectionChange={onSelectedLineThicknessChange}
             options={[
               { label: "細", value: LINE_THICKNESS.thin },
               { label: "中", value: LINE_THICKNESS.medium },
@@ -144,6 +154,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
             label="字"
             value={fontSize}
             onChange={onFontSizeChange}
+            onSelectionChange={onSelectedFontSizeChange}
             options={[
               { label: "小", value: FONT_SIZES.small },
               { label: "中", value: FONT_SIZES.medium },
