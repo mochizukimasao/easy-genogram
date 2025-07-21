@@ -8,7 +8,8 @@
       "WebFetch(domain:easy-genogram-git-main-mochizukimasaos-projects.vercel.app)",
       "Bash(npm run dev:*)",
       "Bash(rm:*)",
-      "WebFetch(domain:easy-genogram.vercel.app)"
+      "WebFetch(domain:easy-genogram.vercel.app)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }
