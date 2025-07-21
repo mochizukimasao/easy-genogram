@@ -45,9 +45,9 @@ const Header: React.FC<HeaderProps> = ({ onSave, onLoad, onUndo, onRedo, canUndo
   const { language, setLanguage, t } = useLanguage();
 
   return (
-    <header className="bg-gray-50 border-b border-gray-200 z-20 w-full">
-      <div className="max-w-full mx-auto px-4 overflow-x-auto">
-        <div className="flex justify-between items-center h-12 flex-nowrap">
+    <header className="bg-white border-b border-gray-200 shadow-md z-20 w-full">
+      <div className="max-w-full mx-auto px-3 overflow-x-auto">
+        <div className="flex justify-between items-center h-16 flex-nowrap">
           <h1 className="text-lg font-bold text-gray-800 whitespace-nowrap mr-4">{t('header')}</h1>
           <div className="flex items-center gap-2 flex-nowrap">
             <Button onClick={onSave}>{t('save')}</Button>

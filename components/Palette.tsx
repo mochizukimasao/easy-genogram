@@ -28,7 +28,7 @@ const ToolButton: React.FC<{
 }> = ({ label, caption, tool, activeTool, onSelect, children }) => (
   <button
     onClick={() => onSelect(tool)}
-    className={`flex flex-col items-center justify-center w-10 h-12 rounded transition-all duration-200 p-1 
+    className={`flex flex-col items-center justify-center min-w-12 h-10 rounded transition-all duration-200 p-1 
         ${activeTool === tool 
           ? 'bg-blue-500 text-white shadow-md' 
           : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'}`}
@@ -56,7 +56,7 @@ const ControlButton: React.FC<{
 const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange }) => {
   const { t } = useLanguage();
   return (
-    <div className="bg-white border-b border-gray-200 px-4 py-2 overflow-x-auto">
+    <div className="bg-white border-b border-gray-200 px-3 py-2 overflow-x-auto">
       <div className="flex items-center gap-4 flex-nowrap">
         {/* 基本ツール */}
         <div className="flex items-center gap-1">

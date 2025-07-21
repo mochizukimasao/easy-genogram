@@ -415,13 +415,17 @@ const AppContent: React.FC = () => {
                         onToolSelect={handleToolSelect}
                     />
                 </main>
-            <footer className="p-4 bg-gray-50 text-center text-xs text-gray-500 border-t border-gray-200">
-                <div className="space-y-2">
-                    <p>{t('tip')}</p>
-                    <div className="flex justify-center items-center space-x-4 text-xs">
-                        <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">プライバシーポリシー</a>
-                        <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">利用規約</a>
-                        <span>&copy; 2025 mochizuki masao</span>
+            <footer className="bg-white border-t border-gray-200 p-4">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center text-xs text-gray-500 space-y-2">
+                        <p>{t('tip')}</p>
+                        <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                            <span>&copy; 2025 mochizuki masao</span>
+                            <div className="flex space-x-4">
+                                <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">プライバシーポリシー</a>
+                                <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">利用規約</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </footer>

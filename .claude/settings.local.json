@@ -12,7 +12,8 @@
       "Bash(git pull:*)",
       "Bash(git branch:*)",
       "Bash(mkdir:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "WebFetch(domain:easy-ecomap.vercel.app)"
     ],
     "deny": []
   }
