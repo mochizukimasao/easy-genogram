@@ -5,7 +5,7 @@ import { RelationshipLineIcon, DashedLineIcon } from './icons/LineIcons';
 import { MousePointerIcon, DeceasedIcon, SeparationIcon, DivorceIcon, EraseIcon } from './icons/UtilIcons';
 import { BoundaryIcon } from './icons/BoundaryIcon';
 import { useLanguage } from '../contexts/LanguageContext';
-import { LINE_THICKNESS, FONT_SIZES } from '../constants';
+import { LINE_THICKNESS, FONT_SIZES, LINE_STYLES } from '../constants';
 import { CohabitingIcon } from './icons/CohabitingIcon';
 import { TextIcon } from './icons/TextIcon';
 
@@ -16,6 +16,8 @@ interface PaletteProps {
   onLineThicknessChange: (width: number) => void;
   fontSize: number;
   onFontSizeChange: (size: number) => void;
+  lineStyle: string;
+  onLineStyleChange: (style: string) => void;
   onSelectedLineThicknessChange?: (width: number) => void;
   onSelectedFontSizeChange?: (size: number) => void;
 }
@@ -59,7 +61,7 @@ const SelectControl: React.FC<{
                     onSelectionChange(newValue);
                 }
             }}
-            className="px-2 py-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-12"
+            className="w-12 h-8 px-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
             {options.map(option => (
                 <option key={option.value} value={option.value}>
@@ -70,7 +72,7 @@ const SelectControl: React.FC<{
     </div>
 );
 
-const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, onSelectedLineThicknessChange, onSelectedFontSizeChange }) => {
+const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, lineStyle, onLineStyleChange, onSelectedLineThicknessChange, onSelectedFontSizeChange }) => {
   const { t } = useLanguage();
   return (
     <div className="bg-white border-b border-gray-200 px-3 py-2 overflow-x-auto">
@@ -106,11 +108,8 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
 
         {/* 線・関係 */}
         <div className="flex items-center gap-1">
-          <ToolButton label={t('solidLine')} caption={t('captionSolid')} tool={LineType.Solid} activeTool={activeTool} onSelect={onToolSelect}>
+          <ToolButton label="線" caption="線" tool={LineType.Solid} activeTool={activeTool} onSelect={onToolSelect}>
             <RelationshipLineIcon className="w-4 h-4"/>
-          </ToolButton>
-          <ToolButton label={t('dotted')} caption={t('captionDashed')} tool={LineType.Dashed} activeTool={activeTool} onSelect={onToolSelect}>
-            <DashedLineIcon className="w-4 h-4"/>
           </ToolButton>
           <ToolButton label={t('separation')} caption={t('captionSep')} tool="separation" activeTool={activeTool} onSelect={onToolSelect}>
             <SeparationIcon className="w-4 h-4"/>
@@ -138,17 +137,20 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
         
         {/* 設定 */}
         <div className="flex items-center gap-2">
-          <SelectControl
-            label="線"
-            value={lineThickness}
-            onChange={onLineThicknessChange}
-            onSelectionChange={onSelectedLineThicknessChange}
-            options={[
-              { label: "細", value: LINE_THICKNESS.thin },
-              { label: "中", value: LINE_THICKNESS.medium },
-              { label: "太", value: LINE_THICKNESS.large }
-            ]}
-          />
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-gray-600">線</span>
+            <select 
+              value={lineStyle}
+              onChange={(e) => onLineStyleChange(e.target.value)}
+              className="w-12 h-8 px-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            >
+              {Object.entries(LINE_STYLES).map(([key, style]) => (
+                <option key={key} value={key}>
+                  {style.label}
+                </option>
+              ))}
+            </select>
+          </div>
           
           <SelectControl
             label="字"

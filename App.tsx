@@ -12,7 +12,7 @@ import {
   LineDecoration,
   GenogramText
 } from './types';
-import { GRID_SIZE, SVG_CANVAS_ID, SHAPE_SIZE, LINE_THICKNESS, FONT_SIZES } from './constants';
+import { GRID_SIZE, SVG_CANVAS_ID, SHAPE_SIZE, LINE_THICKNESS, FONT_SIZES, LINE_STYLES } from './constants';
 import Header from './components/Header';
 import Palette from './components/Palette';
 import Canvas from './components/Canvas';
@@ -29,6 +29,7 @@ const AppContent: React.FC = () => {
     const [selectedElements, setSelectedElements] = useState<CanvasElement[]>([]);
     const [lineThickness, setLineThickness] = useState<number>(LINE_THICKNESS.medium);
     const [fontSize, setFontSize] = useState<number>(FONT_SIZES.medium);
+    const [lineStyle, setLineStyle] = useState<string>('solid_medium');
     const [isGridVisible, setIsGridVisible] = useState(true);
 
     const history = useRef<CanvasState[]>([canvasState]);
@@ -436,6 +437,8 @@ const AppContent: React.FC = () => {
                 onLineThicknessChange={setLineThickness}
                 fontSize={fontSize}
                 onFontSizeChange={setFontSize}
+                lineStyle={lineStyle}
+                onLineStyleChange={setLineStyle}
                 onSelectedLineThicknessChange={updateSelectedLineThickness}
                 onSelectedFontSizeChange={updateSelectedFontSize}
             />
