@@ -463,8 +463,8 @@ const AppContent: React.FC = () => {
                     <div className="flex justify-between items-center text-xs text-gray-500">
                         <span>&copy; 2025 Easy Genogram by mochizuki masao. All rights reserved.</span>
                         <div className="flex space-x-4">
-                            <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">プライバシーポリシー</a>
-                            <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">利用規約</a>
+                            <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700">プライバシーポリシー</a>
+                            <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700">利用規約</a>
                         </div>
                     </div>
                 </div>
