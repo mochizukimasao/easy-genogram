@@ -450,7 +450,7 @@ const AppContent: React.FC = () => {
                         selectedElements={selectedElements}
                         setSelectedElements={setSelectedElements}
                         getNextId={getNextId}
-                        lineThickness={lineThickness}
+                        lineStyle={lineStyle}
                         fontSize={fontSize}
                         moveSelectedElements={moveSelectedElements}
                         isGridVisible={isGridVisible}
@@ -460,13 +460,15 @@ const AppContent: React.FC = () => {
             <ToolHint activeTool={activeTool} />
             <footer className="bg-white border-t border-gray-200 p-4">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center text-xs text-gray-500">
-                        <div className="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                            <span>&copy; 2025 mochizuki masao</span>
-                            <div className="flex space-x-4">
-                                <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">プライバシーポリシー</a>
-                                <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">利用規約</a>
-                            </div>
+                    <div className="flex justify-between items-center text-xs text-gray-500">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+                            <span className="font-bold text-gray-800">Easy Genogram</span>
+                            <span className="hidden sm:inline">by</span>
+                            <span>mochizuki masao</span>
+                        </div>
+                        <div className="flex space-x-4">
+                            <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">プライバシーポリシー</a>
+                            <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">利用規約</a>
                         </div>
                     </div>
                 </div>
