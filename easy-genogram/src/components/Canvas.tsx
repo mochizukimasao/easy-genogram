@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { GenogramShape, GenogramLine, Tool, CanvasElement, Point, ShapeType, LineType, CanvasState, GenogramBoundary, Handle, LineDecoration, GenogramText } from '../types';
-import { GRID_SIZE, SHAPE_SIZE, SVG_CANVAS_ID, FONT_SIZES, CANVAS_WIDTH, CANVAS_HEIGHT } from '../constants';
+import { GRID_SIZE, SHAPE_SIZE, SVG_CANVAS_ID, FONT_SIZES, CANVAS_WIDTH, CANVAS_HEIGHT, LINE_STYLES } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 import ShapeComponent from './ShapeComponent';
 
@@ -13,8 +13,8 @@ const getElementAtPosition = (x: number, y: number, canvasState: CanvasState, se
         if (selected.type === 'line') {
             const line = canvasState.lines.find(l => l.id === selected.id);
             if (line) {
-                if (Math.hypot(x - line.start.x, y - line.start.y) < 8) return { element: selected, handle: 'line-start' };
-                if (Math.hypot(x - line.end.x, y - line.end.y) < 8) return { element: selected, handle: 'line-end' };
+                if (Math.hypot(x - line.start.x, y - line.start.y) < 12) return { element: selected, handle: 'line-start' };
+                if (Math.hypot(x - line.end.x, y - line.end.y) < 12) return { element: selected, handle: 'line-end' };
             }
         }
         if (selected.type === 'text') {
@@ -201,8 +201,8 @@ const LineComponent: React.FC<{
                       x1={start.x} y1={start.y} x2={end.x} y2={end.y}
                       stroke="#4f46e5" strokeWidth={strokeWidth + 5} strokeOpacity="0.5"
                    />
-                    <circle cx={start.x} cy={start.y} r="6" fill="#4f46e5" cursor="move" />
-                    <circle cx={end.x} cy={end.y} r="6" fill="#4f46e5" cursor="move" />
+                    <circle cx={start.x} cy={start.y} r="8" fill="#4f46e5" cursor="move" stroke="white" strokeWidth="2" />
+                    <circle cx={end.x} cy={end.y} r="8" fill="#4f46e5" cursor="move" stroke="white" strokeWidth="2" />
                 </g>
             )}
         </g>
@@ -282,7 +282,7 @@ interface CanvasProps {
     selectedElements: CanvasElement[];
     setSelectedElements: React.Dispatch<React.SetStateAction<CanvasElement[]>>;
     getNextId: () => number;
-    lineThickness: number;
+    lineStyle: string;
     fontSize: number;
     moveSelectedElements: (dx: number, dy: number) => void;
     isGridVisible: boolean;
@@ -303,7 +303,7 @@ const Canvas: React.FC<CanvasProps> = ({
     selectedElements,
     setSelectedElements,
     getNextId,
-    lineThickness,
+    lineStyle,
     fontSize,
     moveSelectedElements,
     isGridVisible,
@@ -428,8 +428,10 @@ const Canvas: React.FC<CanvasProps> = ({
             setIsDrawingLine(true);
             const startPoint = getShapeCenterIfAtPoint(mousePoint) || { x: snapToGrid(mousePoint.x), y: snapToGrid(mousePoint.y) };
             setLineStartPoint(startPoint);
+            const currentLineStyle = LINE_STYLES[lineStyle as keyof typeof LINE_STYLES] || LINE_STYLES.solid_medium;
+            const lineType = currentLineStyle.dashed ? LineType.Dashed : LineType.Solid;
             setPreviewLine({
-                id: -1, type: activeTool as LineType, start: startPoint, end: startPoint, strokeWidth: lineThickness
+                id: -1, type: lineType, start: startPoint, end: startPoint, strokeWidth: currentLineStyle.thickness
             });
             return;
         }
@@ -473,7 +475,7 @@ const Canvas: React.FC<CanvasProps> = ({
         } else {
              setDragStartPoint(mousePoint);
         }
-    }, [activeTool, canvasState, getNextId, getSVGPoint, selectedElements, setSelectedElements, updateState, lineThickness, editingTextId, getShapeCenterIfAtPoint, onToolSelect]);
+    }, [activeTool, canvasState, getNextId, getSVGPoint, selectedElements, setSelectedElements, updateState, lineStyle, editingTextId, getShapeCenterIfAtPoint, onToolSelect]);
 
     const handleMouseMove = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         const isTouchEvent = 'touches' in e;
@@ -608,7 +610,35 @@ const Canvas: React.FC<CanvasProps> = ({
         if (isDragging && dragStartPoint && selectedElements.length > 0) {
             const dx = mousePoint.x - dragStartPoint.x;
             const dy = mousePoint.y - dragStartPoint.y;
-            moveSelectedElements(dx, dy);
+            
+            updateState(prev => {
+                const newShapes = prev.shapes.map(shape => {
+                    const selected = selectedElements.find(el => el.type === 'shape' && el.id === shape.id);
+                    return selected ? { ...shape, x: shape.x + dx, y: shape.y + dy } : shape;
+                });
+                
+                const newLines = prev.lines.map(line => {
+                    const selected = selectedElements.find(el => el.type === 'line' && el.id === line.id);
+                    return selected ? {
+                        ...line,
+                        start: { x: line.start.x + dx, y: line.start.y + dy },
+                        end: { x: line.end.x + dx, y: line.end.y + dy }
+                    } : line;
+                });
+                
+                const newBoundaries = prev.boundaries.map(boundary => {
+                    const selected = selectedElements.find(el => el.type === 'boundary' && el.id === boundary.id);
+                    return selected ? { ...boundary, x: boundary.x + dx, y: boundary.y + dy } : boundary;
+                });
+                
+                const newTexts = prev.texts.map(text => {
+                    const selected = selectedElements.find(el => el.type === 'text' && el.id === text.id);
+                    return selected ? { ...text, x: text.x + dx, y: text.y + dy } : text;
+                });
+                
+                return { ...prev, shapes: newShapes, lines: newLines, boundaries: newBoundaries, texts: newTexts };
+            }, selectedElements);
+            
             setDragStartPoint(mousePoint);
             return;
         }
@@ -734,9 +764,10 @@ const Canvas: React.FC<CanvasProps> = ({
                 : { x: lineStartPoint.x, y: potentialEndPoint.y };
 
             if (lineStartPoint.x !== endPoint.x || lineStartPoint.y !== endPoint.y) {
-                 const newLine: GenogramLine = {
+                const currentLineStyle = LINE_STYLES[lineStyle as keyof typeof LINE_STYLES] || LINE_STYLES.solid_medium;
+                const newLine: GenogramLine = {
                     id: getNextId(), type: activeTool as LineType, start: lineStartPoint, end: endPoint,
-                    strokeWidth: lineThickness, decoration: null,
+                    strokeWidth: currentLineStyle.thickness, decoration: null,
                 };
                 updateState(prev => ({ ...prev, lines: [...prev.lines, newLine] }));
             }
