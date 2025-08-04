@@ -13,7 +13,10 @@
       "Bash(git branch:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "WebFetch(domain:easy-ecomap.vercel.app)"
+      "WebFetch(domain:easy-ecomap.vercel.app)",
+      "Bash(npm cache clean:*)",
+      "Bash(timeout 10 npm run dev)",
+      "Bash(vercel:*)"
     ],
     "deny": []
   }
