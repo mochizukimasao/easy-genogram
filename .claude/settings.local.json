@@ -16,7 +16,8 @@
       "WebFetch(domain:easy-ecomap.vercel.app)",
       "Bash(npm cache clean:*)",
       "Bash(timeout 10 npm run dev)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

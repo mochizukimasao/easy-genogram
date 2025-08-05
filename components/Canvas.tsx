@@ -203,8 +203,8 @@ const LineComponent: React.FC<{
                       x1={start.x} y1={start.y} x2={end.x} y2={end.y}
                       stroke="#4f46e5" strokeWidth={strokeWidth + 5} strokeOpacity="0.5"
                    />
-                    <circle cx={start.x} cy={start.y} r="6" fill="#4f46e5" cursor="move" />
-                    <circle cx={end.x} cy={end.y} r="6" fill="#4f46e5" cursor="move" />
+                    <circle cx={start.x} cy={start.y} r="8" fill="#4f46e5" cursor="move" stroke="white" strokeWidth="2" />
+                    <circle cx={end.x} cy={end.y} r="8" fill="#4f46e5" cursor="move" stroke="white" strokeWidth="2" />
                 </g>
             )}
         </g>
