@@ -1,14 +1,18 @@
-# Run and deploy your AI Studio app
+# Easy Genogram - Fixed Version
 
-This contains everything you need to run your app locally.
+This is a working React + Vite application for creating genograms.
 
-## Run Locally
+## Quick Start
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+npm run dev
+```
 
+## Build
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm run build
+```
+
+The app should display a green success message when working correctly.
