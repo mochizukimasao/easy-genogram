@@ -17,7 +17,9 @@
       "Bash(npm cache clean:*)",
       "Bash(timeout 10 npm run dev)",
       "Bash(vercel:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebFetch(domain:easy-genogram2.vercel.app)",
+      "Bash(timeout 15 npm run dev)"
     ],
     "deny": []
   }

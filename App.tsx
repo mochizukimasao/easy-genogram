@@ -450,7 +450,7 @@ const AppContent: React.FC = () => {
                         selectedElements={selectedElements}
                         setSelectedElements={setSelectedElements}
                         getNextId={getNextId}
-                        lineStyle={lineStyle}
+                        lineThickness={lineThickness}
                         fontSize={fontSize}
                         moveSelectedElements={moveSelectedElements}
                         isGridVisible={isGridVisible}
