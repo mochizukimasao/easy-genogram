@@ -1,26 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(npm run build:*)",
-      "WebFetch(domain:easy-genogram-git-main-mochizukimasaos-projects.vercel.app)",
-      "Bash(npm run dev:*)",
-      "Bash(rm:*)",
-      "WebFetch(domain:easy-genogram.vercel.app)",
-      "Bash(git pull:*)",
-      "Bash(git branch:*)",
-      "Bash(mkdir:*)",
-      "Bash(mv:*)",
-      "WebFetch(domain:easy-ecomap.vercel.app)",
-      "Bash(npm cache clean:*)",
-      "Bash(timeout 10 npm run dev)",
-      "Bash(vercel:*)",
-      "Bash(curl:*)",
-      "WebFetch(domain:easy-genogram2.vercel.app)",
-      "Bash(timeout 15 npm run dev)",
-      "Bash(npm create:*)"
+      "Bash(pkill:*)",
+      "Bash(git init:*)",
+      "Bash(npm run preview:*)"
     ],
     "deny": []
   }
