@@ -180,18 +180,33 @@ const AppContent: React.FC = () => {
         };
     };
 
-    const prepareSvgForExport = (padding: number, includeBackground: boolean): { clonedSvg: SVGSVGElement, bounds: { x: number, y: number, width: number, height: number } } | null => {
+
+
+
+
+    const handleExportPNG = (padding: number, includeBackground: boolean) => {
         const svgElement = document.getElementById(SVG_CANVAS_ID) as unknown as SVGSVGElement;
-        if (!svgElement) return null;
+        if (!svgElement) {
+            console.error('SVG element not found');
+            alert('SVG要素が見つかりません。ページを再読み込みしてください。');
+            return;
+        }
 
         const bounds = calculateBounds(padding);
-        if (!bounds) return null;
+        if (!bounds) {
+            console.error('Bounds calculation failed');
+            alert('画像の境界を計算できませんでした。');
+            return;
+        }
 
+        // SVGをクローンして背景を追加
         const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
-    
+        
+        // グリッドを削除
         const gridGroup = clonedSvg.querySelector('#grid-group');
         if (gridGroup) gridGroup.remove();
 
+        // 背景を追加（オプション）
         if (includeBackground) {
             const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             bgRect.setAttribute('x', String(bounds.x));
@@ -201,71 +216,68 @@ const AppContent: React.FC = () => {
             bgRect.setAttribute('fill', 'white');
             clonedSvg.insertBefore(bgRect, clonedSvg.firstChild);
         }
-    
+
+        // ビューポートを設定
         clonedSvg.setAttribute('width', `${bounds.width}`);
         clonedSvg.setAttribute('height', `${bounds.height}`);
         clonedSvg.setAttribute('viewBox', `${bounds.x} ${bounds.y} ${bounds.width} ${bounds.height}`);
 
-        return { clonedSvg, bounds };
-    };
-
-    const handleExportSVG = (padding: number, includeBackground: boolean) => {
-        const prepared = prepareSvgForExport(padding, includeBackground);
-        if (!prepared) return;
-        
-        const { clonedSvg } = prepared;
-
+        // SVGを文字列化
         const serializer = new XMLSerializer();
         const svgString = serializer.serializeToString(clonedSvg);
-
-        const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'genogram.svg';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    };
-
-    const handleExportPNG = (padding: number, includeBackground: boolean) => {
-        const prepared = prepareSvgForExport(padding, includeBackground);
-        if (!prepared) return;
-
-        const { clonedSvg, bounds } = prepared;
         
-        const serializer = new XMLSerializer();
-        const svgString = serializer.serializeToString(clonedSvg);
-        const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(svgBlob);
+        // データURLとしてSVGを作成
+        const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
 
+        // 画像として読み込み
         const image = new Image();
         image.onload = () => {
-            const canvas = document.createElement('canvas');
-            const scale = 2;
-            canvas.width = bounds.width * scale;
-            canvas.height = bounds.height * scale;
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
+            try {
+                const canvas = document.createElement('canvas');
+                const scale = 2; // 高解像度で出力
+                canvas.width = bounds.width * scale;
+                canvas.height = bounds.height * scale;
+                
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    throw new Error('Canvas context not available');
+                }
+
+                // 背景を白で塗りつぶし
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // スケールを適用して画像を描画
                 ctx.scale(scale, scale);
                 ctx.drawImage(image, 0, 0);
-                const pngUrl = canvas.toDataURL('image/png');
-                const a = document.createElement('a');
-                a.href = pngUrl;
-                a.download = 'genogram.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(pngUrl);
+
+                // PNGとしてダウンロード
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'genogram.png';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    } else {
+                        throw new Error('Failed to create blob');
+                    }
+                }, 'image/png', 1.0);
+            } catch (error) {
+                console.error('PNG export error:', error);
+                alert('PNGの保存に失敗しました: ' + error.message);
             }
-            URL.revokeObjectURL(url);
         };
+
         image.onerror = () => {
-            alert(t('pngSaveError'));
-            URL.revokeObjectURL(url);
+            console.error('Image loading failed');
+            alert('画像の読み込みに失敗しました。');
         };
-        image.src = url;
+
+        image.src = svgDataUrl;
     };
 
     const handleSaveProject = () => {
@@ -472,7 +484,6 @@ const AppContent: React.FC = () => {
             <SaveModal 
                 isOpen={isSaveModalOpen}
                 onClose={() => setSaveModalOpen(false)}
-                onSaveSVG={handleExportSVG}
                 onSavePNG={handleExportPNG}
                 onSaveJSON={handleSaveProject}
             />
