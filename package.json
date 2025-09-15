@@ -5,9 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:open": "vite --open",
+    "start": "npm run dev",
     "build": "vite build",
     "preview": "vite preview",
-    "vercel-build": "vite build"
+    "vercel-build": "vite build",
+    "deploy": "./deploy.sh",
+    "deploy:preview": "vercel",
+    "deploy:prod": "vercel --prod"
   },
   "dependencies": {
     "react": "^19.1.0",

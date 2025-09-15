@@ -6,6 +6,16 @@ import { resolve } from 'path'
 export default defineConfig({
   plugins: [react()],
   base: './',
+  server: {
+    port: 3000,
+    host: true,
+    strictPort: true
+  },
+  preview: {
+    port: 3000,
+    host: true,
+    strictPort: true
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

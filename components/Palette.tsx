@@ -20,22 +20,23 @@ interface PaletteProps {
   onLineStyleChange: (style: string) => void;
   onSelectedLineThicknessChange?: (width: number) => void;
   onSelectedFontSizeChange?: (size: number) => void;
+  onSelectedLineStyleChange?: (style: string) => void;
 }
 
 const ToolButton: React.FC<{
-    label: string;
-    caption: string;
-    tool: Tool;
-    activeTool: Tool;
-    onSelect: (tool: Tool) => void;
-    children: React.ReactNode;
+  label: string;
+  caption: string;
+  tool: Tool;
+  activeTool: Tool;
+  onSelect: (tool: Tool) => void;
+  children: React.ReactNode;
 }> = ({ label, caption, tool, activeTool, onSelect, children }) => (
   <button
     onClick={() => onSelect(tool)}
-    className={`flex flex-col items-center justify-center min-w-[3rem] h-10 px-3 rounded-lg gap-0.5 transition-all duration-200
-        ${activeTool === tool 
-          ? 'bg-blue-500 text-white shadow-md' 
-          : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'}`}
+    className={`flex flex-col items-center justify-center min-w-[3.5rem] h-12 px-3 rounded-lg gap-1 transition-all duration-200 border
+        ${activeTool === tool
+        ? 'bg-blue-500 text-white border-blue-500 shadow-lg transform scale-105'
+        : 'bg-white text-gray-600 hover:bg-gray-50 border-gray-200 hover:border-gray-300 hover:shadow-md'}`}
     title={label}
   >
     {children}
@@ -44,105 +45,119 @@ const ToolButton: React.FC<{
 );
 
 const SelectControl: React.FC<{
-    label: string;
-    value: number;
-    options: Array<{label: string; value: number}>;
-    onChange: (value: number) => void;
-    onSelectionChange?: (value: number) => void;
+  label: string;
+  value: number;
+  options: Array<{ label: string; value: number }>;
+  onChange: (value: number) => void;
+  onSelectionChange?: (value: number) => void;
 }> = ({ label, value, options, onChange, onSelectionChange }) => (
-    <div className="flex items-center gap-1">
-        <span className="text-xs text-gray-600">{label}</span>
-        <select 
-            value={value}
-            onChange={(e) => {
-                const newValue = Number(e.target.value);
-                onChange(newValue);
-                if (onSelectionChange) {
-                    onSelectionChange(newValue);
-                }
-            }}
-            className="w-12 h-8 px-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-        >
-            {options.map(option => (
-                <option key={option.value} value={option.value}>
-                    {option.label}
-                </option>
-            ))}
-        </select>
-    </div>
+  <div className="flex items-center gap-2 bg-white rounded-lg px-2 sm:px-3 py-2 border border-gray-200 shadow-sm">
+    <span className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">{label}</span>
+    <select
+      value={value}
+      onChange={(e) => {
+        const newValue = Number(e.target.value);
+        onChange(newValue);
+        if (onSelectionChange) {
+          onSelectionChange(newValue);
+        }
+      }}
+      className="w-12 sm:w-16 h-8 px-1 sm:px-2 text-xs sm:text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+    >
+      {options.map(option => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </div>
 );
 
-const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, lineStyle, onLineStyleChange, onSelectedLineThicknessChange, onSelectedFontSizeChange }) => {
+const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickness, onLineThicknessChange, fontSize, onFontSizeChange, lineStyle, onLineStyleChange, onSelectedLineThicknessChange, onSelectedFontSizeChange, onSelectedLineStyleChange }) => {
   const { t } = useLanguage();
   return (
-    <div className="bg-white border-b border-gray-200 px-3 py-2 overflow-x-auto">
-      <div className="flex items-center gap-4 flex-nowrap">
+    <div className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-200 shadow-sm px-2 sm:px-4 py-3 overflow-x-auto">
+      <div className="flex items-center gap-2 sm:gap-4 flex-nowrap min-w-max">
         {/* 基本ツール */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('select')} caption={t('captionSelect')} tool="select" activeTool={activeTool} onSelect={onToolSelect}>
-            <MousePointerIcon className="w-4 h-4"/>
+            <MousePointerIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('erase')} caption={t('captionErase')} tool="erase" activeTool={activeTool} onSelect={onToolSelect}>
-            <EraseIcon className="w-4 h-4"/>
+            <EraseIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('textTool')} caption={t('captionText')} tool="text" activeTool={activeTool} onSelect={onToolSelect}>
-            <TextIcon className="w-4 h-4"/>
+            <TextIcon className="w-4 h-4" />
           </ToolButton>
         </div>
+
+        {/* 区切り線 */}
+        <div className="w-px h-8 bg-gray-300"></div>
 
         {/* 図形 */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('male')} caption={t('captionMale')} tool={ShapeType.Male} activeTool={activeTool} onSelect={onToolSelect}>
-            <MaleIcon className="w-4 h-4"/>
+            <MaleIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('female')} caption={t('captionFemale')} tool={ShapeType.Female} activeTool={activeTool} onSelect={onToolSelect}>
-            <FemaleIcon className="w-4 h-4"/>
+            <FemaleIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('indexM')} caption={t('captionIndexM')} tool={ShapeType.IndexMale} activeTool={activeTool} onSelect={onToolSelect}>
-            <IndexMaleIcon className="w-4 h-4"/>
+            <IndexMaleIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('indexF')} caption={t('captionIndexF')} tool={ShapeType.IndexFemale} activeTool={activeTool} onSelect={onToolSelect}>
-            <IndexFemaleIcon className="w-4 h-4"/>
+            <IndexFemaleIcon className="w-4 h-4" />
           </ToolButton>
         </div>
 
-        {/* 線・関係 */}
+        {/* 区切り線 */}
+        <div className="w-px h-8 bg-gray-300"></div>
+
+        {/* 関係・線 */}
         <div className="flex items-center gap-1">
           <ToolButton label="線" caption="線" tool={LineType.Solid} activeTool={activeTool} onSelect={onToolSelect}>
-            <RelationshipLineIcon className="w-4 h-4"/>
+            <RelationshipLineIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('separation')} caption={t('captionSep')} tool="separation" activeTool={activeTool} onSelect={onToolSelect}>
-            <SeparationIcon className="w-4 h-4"/>
+            <SeparationIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('divorce')} caption={t('captionDiv')} tool="divorce" activeTool={activeTool} onSelect={onToolSelect}>
-            <DivorceIcon className="w-4 h-4"/>
+            <DivorceIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('deceased')} caption={t('captionDec')} tool="deceased" activeTool={activeTool} onSelect={onToolSelect}>
-            <DeceasedIcon className="w-4 h-4"/>
+            <DeceasedIcon className="w-4 h-4" />
           </ToolButton>
         </div>
+
+        {/* 区切り線 */}
+        <div className="w-px h-8 bg-gray-300"></div>
 
         {/* その他のツール */}
         <div className="flex items-center gap-1">
           <ToolButton label={t('boundary')} caption={t('captionHouse')} tool="boundary" activeTool={activeTool} onSelect={onToolSelect}>
-            <CohabitingIcon className="w-4 h-4"/>
+            <CohabitingIcon className="w-4 h-4" />
           </ToolButton>
           <ToolButton label={t('cohabitingTool')} caption={t('captionBound')} tool="cohabiting" activeTool={activeTool} onSelect={onToolSelect}>
-            <BoundaryIcon className="w-4 h-4"/>
+            <BoundaryIcon className="w-4 h-4" />
           </ToolButton>
         </div>
 
         {/* セパレーター */}
-        <div className="w-px h-6 bg-gray-300"></div>
-        
+        <div className="w-px h-8 bg-gray-300"></div>
+
         {/* 設定 */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-600">線</span>
-            <select 
+        <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+          <div className="flex items-center gap-2 bg-white rounded-lg px-2 sm:px-3 py-2 border border-gray-200 shadow-sm">
+            <span className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">線</span>
+            <select
               value={lineStyle}
-              onChange={(e) => onLineStyleChange(e.target.value)}
-              className="w-12 h-8 px-1 text-xs border border-gray-300 rounded bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              onChange={(e) => {
+                onLineStyleChange(e.target.value);
+                if (onSelectedLineStyleChange) {
+                  onSelectedLineStyleChange(e.target.value);
+                }
+              }}
+              className="w-12 sm:w-16 h-8 px-1 sm:px-2 text-xs sm:text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
             >
               {Object.entries(LINE_STYLES).map(([key, style]) => (
                 <option key={key} value={key}>
@@ -151,7 +166,7 @@ const Palette: React.FC<PaletteProps> = ({ activeTool, onToolSelect, lineThickne
               ))}
             </select>
           </div>
-          
+
           <SelectControl
             label="字"
             value={fontSize}

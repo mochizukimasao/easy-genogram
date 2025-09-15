@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "vite --port 3000",
+    "dev:open": "vite --port 3000 --open",
+    "dev:force": "pkill -f 'vite --port 3000' || true && vite --port 3000",
+    "start": "./start-dev.sh",
+    "build": "vite build",
+    "preview": "vite preview",
+    "vercel-build": "vite build",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel",
+    "deploy:auto": "git add . && git commit -m 'Auto-deploy from Cursor' && git push origin main"
+  }
+}

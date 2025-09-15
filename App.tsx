@@ -405,6 +405,35 @@ const AppContent: React.FC = () => {
         }, selectedElements);
     }, [selectedElements, updateState]);
 
+    const updateSelectedLineStyle = useCallback((newLineStyle: string) => {
+        if (selectedElements.length === 0) return;
+        updateState(prev => {
+            const selectedLineIds = new Set(selectedElements.filter(el => el.type === 'line').map(el => el.id));
+            const selectedBoundaryIds = new Set(selectedElements.filter(el => el.type === 'boundary').map(el => el.id));
+
+            const lineStyleConfig = LINE_STYLES[newLineStyle as keyof typeof LINE_STYLES];
+            if (!lineStyleConfig) return prev;
+
+            return {
+                ...prev,
+                lines: prev.lines.map(l => 
+                    selectedLineIds.has(l.id) ? { 
+                        ...l, 
+                        type: lineStyleConfig.dashed ? LineType.Dashed : LineType.Solid,
+                        strokeWidth: lineStyleConfig.thickness
+                    } : l
+                ),
+                boundaries: prev.boundaries.map(b => 
+                    selectedBoundaryIds.has(b.id) ? { 
+                        ...b, 
+                        type: lineStyleConfig.dashed ? LineType.Dashed : LineType.Solid,
+                        strokeWidth: lineStyleConfig.thickness
+                    } : b
+                )
+            };
+        }, selectedElements);
+    }, [selectedElements, updateState]);
+
     
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -431,7 +460,28 @@ const AppContent: React.FC = () => {
     }, [deleteSelectedElements, handleUndo, handleRedo]);
 
     return (
-        <div className="flex flex-col h-screen bg-white font-sans overflow-hidden">
+        <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans overflow-hidden">
+            {/* SEO用の見えないコンテンツ */}
+            <div className="sr-only">
+                <h1>かんたんジェノグラム - 無料で簡単に家系図を作成できるWebツール</h1>
+                <h2>ジェノグラム作成の特徴</h2>
+                <ul>
+                    <li>直感的なドラッグ&ドロップ操作で家族関係を視覚化</li>
+                    <li>標準化された図形（男性・女性・本人）を使用した正確な家系図作成</li>
+                    <li>家族関係線（結婚・離婚・分離）の表現</li>
+                    <li>同居関係の境界線表示</li>
+                    <li>故人マークの追加機能</li>
+                    <li>テキストラベルの自由な配置</li>
+                    <li>SVG・PNG形式での保存・出力</li>
+                    <li>プロジェクトファイルの保存・読み込み</li>
+                    <li>多言語対応（日本語・英語）</li>
+                </ul>
+                <h2>用途</h2>
+                <p>医療・心理学・家族研究・遺伝子研究・家族療法・ソーシャルワーク・教育・研究など、様々な分野で活用できる専門的なジェノグラム作成ツールです。</p>
+                <h2>使用方法</h2>
+                <p>左側のツールパレットから図形や線を選択し、キャンバス上でクリックまたはドラッグして配置します。ダブルクリックでテキスト編集、Deleteキーで削除、Shift+クリックで複数選択が可能です。</p>
+            </div>
+            
             <Header 
                 onSave={() => setSaveModalOpen(true)}
                 onLoad={handleLoadProject}
@@ -453,8 +503,9 @@ const AppContent: React.FC = () => {
                 onLineStyleChange={setLineStyle}
                 onSelectedLineThicknessChange={updateSelectedLineThickness}
                 onSelectedFontSizeChange={updateSelectedFontSize}
+                onSelectedLineStyleChange={updateSelectedLineStyle}
             />
-            <main className="flex-1 overflow-auto bg-white">
+            <main className="flex-1 overflow-auto bg-white m-4 rounded-xl shadow-lg border border-gray-200">
                     <Canvas
                         canvasState={canvasState}
                         updateState={updateState}
@@ -470,13 +521,14 @@ const AppContent: React.FC = () => {
                     />
                 </main>
             <ToolHint activeTool={activeTool} />
-            <footer className="bg-white border-t border-gray-200 p-4">
+            <footer className="bg-white border-t border-gray-200 p-4 mx-4 mb-4 rounded-t-xl shadow-lg">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex justify-between items-center text-xs text-gray-500">
+                    <div className="flex justify-between items-center text-sm text-gray-500">
                         <span>&copy; 2025 Easy Genogram by mochizuki masao. All rights reserved.</span>
-                        <div className="flex space-x-4">
-                            <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700">プライバシーポリシー</a>
-                            <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700">利用規約</a>
+                        <div className="flex space-x-6">
+                            <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700 hover:underline transition-colors">プライバシーポリシー</a>
+                            <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700 hover:underline transition-colors">利用規約</a>
+                            <a href="/faq.html" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700 hover:underline transition-colors">よくある質問</a>
                         </div>
                     </div>
                 </div>

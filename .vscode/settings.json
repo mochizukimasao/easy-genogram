@@ -1,0 +1,50 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.suggest.autoImports": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "*.ts": "typescript"
+  },
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "workbench.startupEditor": "none",
+  "extensions.autoUpdate": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "liveServer.settings.port": 3000,
+  "liveServer.settings.CustomBrowser": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.ts",
+    "**/*.tsx",
+    "node_modules/**"
+  ],
+  "liveServer.settings.mount": [
+    [
+      "/",
+      "./dist"
+    ]
+  ],
+  "workbench.editor.enablePreview": false,
+  "emmet.triggerExpansionOnTab": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto"
+}
